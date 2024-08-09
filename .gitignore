@@ -41,3 +41,6 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Ignore Google Cloud credentials
+assets/myagent-xoge-e5bc4acd332b.json
