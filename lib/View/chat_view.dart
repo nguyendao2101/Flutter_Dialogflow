@@ -83,25 +83,25 @@ class _ChatScreenState extends State<ChatScreen> {
 
     _scrollToBottom();
 
-    try {
-      AuthGoogle authGoogle =
-          await AuthGoogle(fileJson: "assets/myagent-xoge-e5bc4acd332b.json")
-              .build();
-      DialogFlow dialogFlow =
-          DialogFlow(authGoogle: authGoogle, language: Language.english);
+    // try {
+    //   AuthGoogle authGoogle =
+    //       await AuthGoogle(fileJson: "assets/myagent-xoge-e5bc4acd332b.json")
+    //           .build();
+    //   DialogFlow dialogFlow =
+    //       DialogFlow(authGoogle: authGoogle, language: Language.english);
 
-      AIResponse response = await dialogFlow.detectIntent(messageToSend);
+    //   AIResponse response = await dialogFlow.detectIntent(messageToSend);
 
-      setState(() {
-        _messages.add({
-          "data": "2",
-          "message": response.getMessage() ?? "Lỗi, vui lòng thử lại!"
-        });
-        _scrollToBotMessage = true; // Đặt biến để cuộn đến tin nhắn chatbot
-      });
+    //   setState(() {
+    //     _messages.add({
+    //       "data": "2",
+    //       "message": response.getMessage() ?? "Lỗi, vui lòng thử lại!"
+    //     });
+    //     _scrollToBotMessage = true; // Đặt biến để cuộn đến tin nhắn chatbot
+    //   });
 
-      _scrollToBottom();
-    } catch (e) {}
+    //   _scrollToBottom();
+    // } catch (e) {}
   }
 
   @override
