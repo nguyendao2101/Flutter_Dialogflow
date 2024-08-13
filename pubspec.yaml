@@ -39,6 +39,11 @@ dependencies:
   dialogflow_flutter: ^1.0.0
   googleapis_auth: ^1.4.1
   get: ^4.6.6
+  firebase_auth: ^5.1.4
+  firebase_core: ^3.3.0
+  firebase_analytics: ^11.2.1
+  firebase_database: ^11.0.4
+  speech_to_text: ^6.6.0
 
 dev_dependencies:
   flutter_test:

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "340146495612",
+    "project_id": "flutterdialogflow-2501c",
+    "storage_bucket": "flutterdialogflow-2501c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:340146495612:android:033cdcfd1db366514a29f9",
+        "android_client_info": {
+          "package_name": "com.example.freechat_dialogflow"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiO_lxERWWhxJetFW9_VF58kLpQ4OyrY4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
