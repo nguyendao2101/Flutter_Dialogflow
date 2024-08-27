@@ -1,9 +1,12 @@
-// ignore_for_file: library_private_types_in_public_api, empty_catches, unused_element
+// ignore_for_file: library_private_types_in_public_api, empty_catches, unused_element, avoid_print
 
 import 'package:dialogflow_flutter/dialogflowFlutter.dart';
 import 'package:dialogflow_flutter/googleAuth.dart';
 import 'package:dialogflow_flutter/language.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:freechat_dialogflow/Widgets/common/color_extention.dart';
 import 'package:freechat_dialogflow/Widgets/common/color_extentionn.dart';
@@ -22,13 +25,29 @@ class _ChatScreenState extends State<ChatScreen> {
   late stt.SpeechToText _speech;
   late ScrollController _scrollController;
   bool _isListening = false;
-  bool _scrollToBotMessage = false; // Biến mới để kiểm soát cuộn
+  bool _scrollToBotMessage = false;
+  final DatabaseReference _database =
+      FirebaseDatabase.instance.ref(); // Reference to Firebase
+  late String _userId; // Late initialization for userId
 
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
     _speech = stt.SpeechToText();
+    _initializeUserId(); // Fetch the user ID
+  }
+
+  void _initializeUserId() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        _userId = user.uid;
+      });
+    } else {
+      // Handle user not logged in case
+      print("No user logged in.");
+    }
   }
 
   void _scrollToBottom() {
@@ -39,7 +58,7 @@ class _ChatScreenState extends State<ChatScreen> {
         curve: Curves.easeOut,
       );
       setState(() {
-        _scrollToBotMessage = false; // Đặt lại biến sau khi cuộn
+        _scrollToBotMessage = false;
       });
     }
   }
@@ -48,7 +67,10 @@ class _ChatScreenState extends State<ChatScreen> {
     _speech = stt.SpeechToText();
     bool available = await _speech.initialize();
     if (available) {
-    } else {}
+      print('SpeechToText initialized successfully.');
+    } else {
+      print('SpeechToText initialization failed.');
+    }
   }
 
   void _startListening() async {
@@ -56,14 +78,16 @@ class _ChatScreenState extends State<ChatScreen> {
     if (available) {
       setState(() {
         _isListening = true;
-        _controller.clear(); // Xóa nội dung trước khi bắt đầu ghi âm
+        _controller.clear();
       });
       _speech.listen(onResult: (val) {
         setState(() {
           _controller.text = val.recognizedWords;
         });
       });
-    } else {}
+    } else {
+      print('Speech recognition not available.');
+    }
   }
 
   void _stopListening() {
@@ -83,25 +107,93 @@ class _ChatScreenState extends State<ChatScreen> {
 
     _scrollToBottom();
 
-    // try {
-    //   AuthGoogle authGoogle =
-    //       await AuthGoogle(fileJson: "assets/myagent-xoge-e5bc4acd332b.json")
-    //           .build();
-    //   DialogFlow dialogFlow =
-    //       DialogFlow(authGoogle: authGoogle, language: Language.english);
+    try {
+      AuthGoogle authGoogle =
+          await AuthGoogle(fileJson: "assets/myagent-xoge-e5bc4acd332b.json")
+              .build();
+      DialogFlow dialogFlow =
+          DialogFlow(authGoogle: authGoogle, language: Language.english);
 
-    //   AIResponse response = await dialogFlow.detectIntent(messageToSend);
+      AIResponse response = await dialogFlow.detectIntent(messageToSend);
 
-    //   setState(() {
-    //     _messages.add({
-    //       "data": "2",
-    //       "message": response.getMessage() ?? "Lỗi, vui lòng thử lại!"
-    //     });
-    //     _scrollToBotMessage = true; // Đặt biến để cuộn đến tin nhắn chatbot
-    //   });
+      setState(() {
+        _messages.add({
+          "data": "2",
+          "message": response.getMessage() ?? "Lỗi, vui lòng thử lại!"
+        });
+        _scrollToBotMessage = true;
+      });
 
-    //   _scrollToBottom();
-    // } catch (e) {}
+      _scrollToBottom();
+
+      // Save chat history to Firebase
+      if (_userId.isNotEmpty) {
+        await _saveChatHistory(messageToSend, response.getMessage());
+      }
+    } catch (e) {
+      print('Error sending message: $e');
+    }
+  }
+
+  Future<void> _saveChatHistory(String userMessage, String? botMessage) async {
+    final now = DateTime.now();
+    final formattedDate = "${now.year}-${now.month}-${now.day}";
+    final formattedTime = "${now.hour}:${now.minute}:${now.second}";
+
+    Map<String, dynamic> chatEntry = {
+      'userMessage': userMessage,
+      'botMessage': botMessage ?? "Lỗi, vui lòng thử lại!",
+      'date': formattedDate,
+      'time': formattedTime,
+    };
+
+    // Update chat history in Firebase
+    DatabaseReference chatHistoryRef =
+        _database.child('users/$_userId/historyChat');
+    await chatHistoryRef.push().set(chatEntry);
+  }
+
+  Future<void> _toggleFavouriteMessage(int index) async {
+    String message = _messages[index]["message"] ?? '';
+
+    // Lấy tham chiếu đến danh sách tin nhắn yêu thích của người dùng
+    DatabaseReference favRef =
+        _database.child('users/$_userId/favouriteMessages');
+    DataSnapshot snapshot = await favRef.get();
+
+    // Kiểm tra và chuyển đổi giá trị từ snapshot.value
+    List<String> favouriteMessages = [];
+    if (snapshot.value != null) {
+      try {
+        // Kiểm tra kiểu dữ liệu và chuyển đổi giá trị
+        favouriteMessages = List<String>.from(snapshot.value as List);
+      } catch (e) {
+        // Nếu chuyển đổi không thành công, tạo một danh sách rỗng
+        favouriteMessages = [];
+      }
+    }
+
+    // Kiểm tra xem tin nhắn đã nằm trong danh sách yêu thích chưa
+    bool isFavourite = favouriteMessages.contains(message);
+    if (isFavourite) {
+      favouriteMessages.remove(message);
+    } else {
+      favouriteMessages.add(message);
+    }
+
+    // Cập nhật danh sách yêu thích trong Firebase
+    await favRef.set(favouriteMessages);
+
+    // Hiển thị thông báo Snackbar
+    Get.snackbar(
+      'Success',
+      isFavourite
+          ? 'Đã có trong danh sách yêu thích, nhấn thêm lần nữa để cập nhật lại'
+          : 'Đã thêm vào danh sách yêu thích',
+      snackPosition: SnackPosition.TOP,
+    );
+
+    setState(() {});
   }
 
   @override
@@ -135,9 +227,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     width: 24,
                   ),
                 ),
-                const SizedBox(
-                  width: 20,
-                ),
+                const SizedBox(width: 20),
                 InkWell(
                   onTap: () {
                     setState(() {
@@ -150,9 +240,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     width: 24,
                   ),
                 ),
-                const SizedBox(
-                  width: 20,
-                ),
+                const SizedBox(width: 20),
                 ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
@@ -162,9 +250,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 10,
-                    ),
+                        horizontal: 10, vertical: 10),
                   ),
                   child: Row(
                     children: [
@@ -207,6 +293,7 @@ class _ChatScreenState extends State<ChatScreen> {
             ? MainAxisAlignment.end
             : MainAxisAlignment.start,
         children: <Widget>[
+          //if
           if (_messages[index]["data"] != "1")
             Image.asset(
               ImageAssest.logoApp,
@@ -214,30 +301,47 @@ class _ChatScreenState extends State<ChatScreen> {
               width: 24,
             ),
           const SizedBox(width: 10),
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 14.0, vertical: 10.0),
-                constraints: BoxConstraints(
-                    maxWidth: MediaQuery.of(context).size.width * 0.8),
-                decoration: BoxDecoration(
-                  color: ChatColor.gray1,
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: Text(
-                  _messages[index]["message"] ?? '',
-                  style: const TextStyle(
-                    color: Colors.white,
+          //if
+          Expanded(
+            child: Align(
+              alignment: _messages[index]["data"] == "1"
+                  ? Alignment.centerRight
+                  : Alignment.centerLeft,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Flexible(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 14.0, vertical: 10.0),
+                      constraints: BoxConstraints(
+                          maxWidth: MediaQuery.of(context).size.width * 0.8),
+                      decoration: BoxDecoration(
+                        color: ChatColor.gray1,
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: Text(
+                        _messages[index]["message"] ?? '',
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
                   ),
-                ),
+                  const SizedBox(width: 10),
+                  // if
+                  if (_messages[index]["data"] != "1")
+                    InkWell(
+                        onTap: () => _toggleFavouriteMessage(index),
+                        child: Image.asset(
+                          ImageAssest.addFavouriteMessages,
+                          width: 24,
+                          height: 24,
+                        )),
+                  // if
+                ],
               ),
-              const SizedBox(
-                width: 10,
-              ),
-              Icon(Icons.favorite_border_outlined)
-            ],
+            ),
           ),
+          // if
           if (_messages[index]["data"] == "1") const SizedBox(width: 10),
           if (_messages[index]["data"] == "1")
             Image.asset(
@@ -245,6 +349,7 @@ class _ChatScreenState extends State<ChatScreen> {
               height: 24,
               width: 24,
             ),
+          // if
         ],
       ),
     );
