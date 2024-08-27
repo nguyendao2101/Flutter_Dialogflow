@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:freechat_dialogflow/View/login_view.dart';
 import 'package:freechat_dialogflow/ViewModel/signUp_viewModel.dart';
@@ -8,12 +10,15 @@ import 'package:get/get.dart';
 class SignUpScreen extends StatelessWidget {
   final _viewModel = SignupViewmodel();
 
+  SignUpScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ChatColor.background,
       appBar: AppBar(
         backgroundColor: ChatColor.background,
+        iconTheme: IconThemeData(color: ChatColor.almond),
         title: Text(
           'Đăng ký tài khoản',
           style: TextStyle(
@@ -31,16 +36,24 @@ class SignUpScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(
-                  height: 32,
+                  height: 24,
                 ),
                 Image.asset(
                   ImageAssest.logoApp,
                   height: 100,
                 ),
+                const SizedBox(
+                  height: 12,
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: TextFormField(
-                    decoration: const InputDecoration(labelText: 'Email'),
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      filled: true,
+                      fillColor: ChatColor.gray1,
+                    ),
+                    style: const TextStyle(color: Colors.white70),
                     keyboardType: TextInputType.emailAddress,
                     onChanged: _viewModel.onChangeUsername,
                     validator: _viewModel.validatorUsername,
@@ -53,6 +66,8 @@ class SignUpScreen extends StatelessWidget {
                     child: TextFormField(
                       decoration: InputDecoration(
                         labelText: 'Password',
+                        filled: true,
+                        fillColor: ChatColor.gray1,
                         suffixIcon: IconButton(
                           icon: Icon(
                             _viewModel.isObscured.value
@@ -62,6 +77,7 @@ class SignUpScreen extends StatelessWidget {
                           onPressed: _viewModel.toggleObscureText,
                         ),
                       ),
+                      style: const TextStyle(color: Colors.white70),
                       obscureText: _viewModel.isObscured.value,
                       onChanged: _viewModel.onChangePassword,
                       validator: _viewModel.validatorPassword,
@@ -75,6 +91,8 @@ class SignUpScreen extends StatelessWidget {
                     child: TextFormField(
                       decoration: InputDecoration(
                         labelText: 'Nhập lại Password',
+                        filled: true,
+                        fillColor: ChatColor.gray1,
                         suffixIcon: IconButton(
                           icon: Icon(
                             _viewModel.isEntryPasswordObscured.value
@@ -84,6 +102,7 @@ class SignUpScreen extends StatelessWidget {
                           onPressed: _viewModel.toggleEntryPasswordObscureText,
                         ),
                       ),
+                      style: const TextStyle(color: Colors.white70),
                       obscureText: _viewModel.isEntryPasswordObscured.value,
                       onChanged: _viewModel.onChangeConfirmPassword,
                       validator: _viewModel.validatorConfirmPassword,
@@ -94,7 +113,12 @@ class SignUpScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: TextFormField(
-                    decoration: const InputDecoration(labelText: 'Họ và tên'),
+                    decoration: InputDecoration(
+                      labelText: 'Họ và tên',
+                      filled: true,
+                      fillColor: ChatColor.gray1,
+                    ),
+                    style: const TextStyle(color: Colors.white70),
                     onChanged: _viewModel.onChangeCheckName,
                     validator: _viewModel.validatorCheck,
                   ),
@@ -103,7 +127,12 @@ class SignUpScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: TextFormField(
-                    decoration: const InputDecoration(labelText: 'Địa chỉ'),
+                    decoration: InputDecoration(
+                      labelText: 'Địa chỉ',
+                      filled: true,
+                      fillColor: ChatColor.gray1,
+                    ),
+                    style: const TextStyle(color: Colors.white70),
                     onChanged: _viewModel.onChangeCheckAdress,
                     validator: _viewModel.validatorCheck,
                   ),
@@ -112,7 +141,12 @@ class SignUpScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: TextFormField(
-                    decoration: const InputDecoration(labelText: 'Giới tính'),
+                    decoration: InputDecoration(
+                      labelText: 'Giới tính',
+                      filled: true,
+                      fillColor: ChatColor.gray1,
+                    ),
+                    style: const TextStyle(color: Colors.white70),
                     onChanged: _viewModel.onChangeCheckSex,
                     validator: _viewModel.validatorCheck,
                   ),

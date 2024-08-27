@@ -39,13 +39,13 @@ class _MainScreenViewState extends State<MainScreenView>
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(MainScreenViewmodel());
-    var media = MediaQuery.sizeOf(context);
+    MediaQuery.sizeOf(context);
     return Scaffold(
       key: controller.scaffoldKey,
       backgroundColor: ChatColor.background,
       body: TabBarView(
         controller: tabController,
-        children: const [HistoryChatView(), HomeView(), SettingsView()],
+        children: const [HistoryScreen(), HomeView(), SettingsView()],
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16.0),

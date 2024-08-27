@@ -1,10 +1,11 @@
+// ignore_for_file: file_names
+
 import 'package:freechat_dialogflow/View/login_view.dart';
 import 'package:get/get.dart';
 
 class LogoApp extends GetxController {
   void loadView() async {
     await Future.delayed(const Duration(seconds: 3));
-    Get.to(const LoginView());
-    // Get.toNamed(AppRouterName.login);
+    Get.to(() => const LoginView());
   }
 }

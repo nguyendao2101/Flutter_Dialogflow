@@ -78,7 +78,7 @@ class LoginView extends StatelessWidget {
                         const SizedBox(width: 16),
                         ElevatedButton(
                           onPressed: () {
-                            Get.to(SignUpScreen());
+                            Get.to(() => SignUpScreen());
                           },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: ChatColor.almond),

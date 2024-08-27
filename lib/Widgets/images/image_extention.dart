@@ -34,6 +34,9 @@ class ImageAssest {
   static String sendMessages = '$baseImagePath/sendMessages.png';
   static String microphone = '$baseImagePath/microphone.png';
   static String microphoneUn = '$baseImagePath/microphoneUn.png';
+  static String addFavouriteMessages =
+      '$baseImagePath/addFavouriteMessages.png';
 
+  //user
   static String users = '$baseImagePath/user.png';
 }

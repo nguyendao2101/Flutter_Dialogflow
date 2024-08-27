@@ -80,7 +80,7 @@ class _HomeViewState extends State<HomeView> {
               ),
               GestureDetector(
                 onTap: () {
-                  Get.to(() => ChatScreen());
+                  Get.to(() => const ChatScreen());
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
