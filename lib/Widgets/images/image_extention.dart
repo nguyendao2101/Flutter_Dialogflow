@@ -27,6 +27,8 @@ class ImageAssest {
   static String drawerHome = '$baseImagePath/drawerHome.png';
   static String arrowRight = '$baseImagePath/arrowRight.png';
   static String askChatbotQuestion = '$baseImagePath/askChatbotQuestion.png';
+  static String marker = '$baseImagePath/marker.png';
+
 
   //chat
   static String trash = '$baseImagePath/trash.png';
@@ -39,4 +41,5 @@ class ImageAssest {
 
   //user
   static String users = '$baseImagePath/user.png';
+
 }

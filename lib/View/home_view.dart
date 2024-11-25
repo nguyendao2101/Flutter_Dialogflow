@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:freechat_dialogflow/View/chat_view.dart';
 import 'package:freechat_dialogflow/Widgets/common/color_extentionn.dart';
 import 'package:freechat_dialogflow/Widgets/images/image_extention.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
+import '../Model/location_model.dart';
 import '../Model/weather_model.dart';
 
 class HomeView extends StatefulWidget {
@@ -20,8 +23,24 @@ class _HomeViewState extends State<HomeView> {
   String _description = ''; // biến mô tả thời tiết
   String _icon = ''; // biến miêu tả mã icon thời tiết
   String _errorMessage = ''; //biến để lưu trữ thông báo lỗi nếu có
-
   final WeatherService _weatherService = WeatherService();
+  String location = ' '; // biến lưu vị trí hiện tại
+
+
+  String getCity(String location) {
+    // Tách chuỗi location theo dấu phẩy (',') thành một danh sách
+    List<String> parts = location.split(',');
+
+    // Lọc phần chứa từ "City"
+    for (var part in parts) {
+      if (part.contains('City')) {
+        // Cắt bỏ phần 'City: ' và trả về tên thành phố
+        return part.split(':')[1].trim();
+      }
+    }
+    return ''; // Trả về chuỗi rỗng nếu không tìm thấy City
+  }
+  
 
   Future<void> fetchWeather(String city) async {
     try {
@@ -39,9 +58,9 @@ class _HomeViewState extends State<HomeView> {
       });
     }
   }
-
   @override
   Widget build(BuildContext context) {
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -169,7 +188,7 @@ class _HomeViewState extends State<HomeView> {
             children: [
               SizedBox(
                 height: 250,
-                width: 370,
+                width: 330,
                 child: SfCalendar(
                   view: CalendarView.month, // Đặt chế độ xem của lịch là dạng tháng.
                   initialSelectedDate: DateTime.now(), // Đặt ngày được chọn ban đầu là ngày hiện tại.
@@ -256,6 +275,7 @@ class _HomeViewState extends State<HomeView> {
                   _errorMessage,
                   style: const TextStyle(color: Colors.red, fontSize: 24),
                 ),
+              const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: TextField(
@@ -273,10 +293,45 @@ class _HomeViewState extends State<HomeView> {
                 // gửi yêu cầu lấy dữ liệu thời tiết
                 onPressed: () {
                   fetchWeather(_cityController.text);
+                  _cityController.clear();
                 },
                 child: const Text('Lấy Dữ Liệu Thời Tiết'),
               ),
-
+              const SizedBox(height: 10,),
+              FutureBuilder<String>(
+                future: LocationService().getCurrentLocationAndAddress(), // Gọi hàm lấy vị trí và thông tin địa chỉ
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator()); // Đang chờ
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}')); // Có lỗi
+                  } else if (snapshot.hasData) {
+                    location = snapshot.data!;
+                    print('location: ${getCity(location)}');
+                    return Center(
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(ImageAssest.marker, height: 24, width: 24,),
+                              const SizedBox(width: 10,),
+                              Text('Your Location', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.green),)
+                            ],
+                          ),
+                          Text(
+                            snapshot.data!, // Hiển thị thông tin vị trí và địa chỉ
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 18, color: Colors.blueAccent),
+                          ),
+                        ],
+                      ),
+                    );
+                  } else {
+                    return Center(child: Text('No location data available.')); // Không có dữ liệu
+                  }
+                },
+              ),
 
             ],
           ),

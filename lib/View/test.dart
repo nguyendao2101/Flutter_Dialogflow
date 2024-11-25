@@ -1,92 +1,79 @@
-// // ignore_for_file: library_private_types_in_public_api, unnecessary_brace_in_string_interps
-//
 // import 'package:flutter/material.dart';
-// import 'package:lab1/Widgets/weatherService.dart';
+// import 'package:geocoding/geocoding.dart';
+// import 'package:location/location.dart';
 //
-// class Lab4 extends StatefulWidget {
-//   const Lab4({super.key});
+// class LocationService {
+//   Future<Position> getCurrentLocation() async {
+//     Location location = Location();
+//     bool serviceEnabled = await location.serviceEnabled();
+//     if (!serviceEnabled) {
+//       serviceEnabled = await location.requestService();
+//       if (!serviceEnabled) {
+//         throw Exception('Location services are disabled');
+//       }
+//     }
 //
-//   @override
-//   _Lab4State createState() => _Lab4State();
+//     PermissionStatus permissionGranted = await location.hasPermission();
+//     if (permissionGranted == PermissionStatus.denied) {
+//       permissionGranted = await location.requestPermission();
+//       if (permissionGranted != PermissionStatus.granted) {
+//         throw Exception('Location permission denied');
+//       }
+//     }
+//
+//     return await location.getLocation();
+//   }
 // }
 //
-// class _Lab4State extends State<Lab4> {
-//   final _cityController = TextEditingController();
-//   String _temperature = ''; // biến lưu nhiệt độ
-//   String _description = ''; // biến mô tả thời tiết
-//   String _icon = ''; // biến miêu tả mã icon thời tiết
-//   String _errorMessage = ''; //biến để lưu trữ thông báo lỗi nếu có
-//
-//   final WeatherService _weatherService = WeatherService();
-//
-//   Future<void> fetchWeather(String city) async {
-//     try {
-//       final data = await _weatherService.fetchWeather(city);
-//       setState(() {
-//         // cập nhật lại giá trị các biến lưu trữ
-//         _temperature = data['current']['temp_c'].toString();
-//         _description = data['current']['condition']['text'];
-//         _icon = data['current']['condition']['icon'];
-//         _errorMessage = '';
-//       });
-//     } catch (e) {
-//       setState(() {
-//         _errorMessage = 'Không tìm thấy thời tiết thành phố này';
-//       });
-//     }
-//   }
-//
+// class LocationScreen extends StatelessWidget {
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Lab 4: Ứng Dụng Thời Tiết với Fetch API'),
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Column(
-//           children: [
-//             TextField(
-//               // nhập dữ liệu
-//               controller: _cityController, // lấy dữ liệu nhập vào
-//               decoration: const InputDecoration(
-//                 labelText: 'Nhập tên thành phố',
-//                 border: OutlineInputBorder(),
+//       appBar: AppBar(title: Text('Location with City and Country')),
+//       body: FutureBuilder<Position>(
+//         future: LocationService().getCurrentLocation(),
+//         builder: (context, snapshot) {
+//           if (snapshot.connectionState == ConnectionState.waiting) {
+//             return Center(child: CircularProgressIndicator());
+//           } else if (snapshot.hasError) {
+//             return Center(child: Text('Error: ${snapshot.error}'));
+//           } else if (snapshot.hasData) {
+//             Position position = snapshot.data!;
+//             return FutureBuilder<List<Placemark>>(
+//               future: GeocodingPlatform.instance.placemarkFromCoordinates(
+//                 position.latitude,
+//                 position.longitude,
 //               ),
-//             ),
-//             const SizedBox(height: 20),
-//             ElevatedButton(
-//               // gửi yêu cầu lấy dữ liệu thời tiết
-//               onPressed: () {
-//                 fetchWeather(_cityController.text);
+//               builder: (context, geocodeSnapshot) {
+//                 if (geocodeSnapshot.connectionState == ConnectionState.waiting) {
+//                   return Center(child: CircularProgressIndicator());
+//                 } else if (geocodeSnapshot.hasError) {
+//                   return Center(child: Text('Error: ${geocodeSnapshot.error}'));
+//                 } else if (geocodeSnapshot.hasData) {
+//                   List<Placemark> placemarks = geocodeSnapshot.data!;
+//                   if (placemarks.isNotEmpty) {
+//                     Placemark placemark = placemarks.first;
+//                     return Center(
+//                       child: Text(
+//                         'City: ${placemark.locality}, Country: ${placemark.country}\nLat: ${position.latitude}, Long: ${position.longitude}',
+//                         textAlign: TextAlign.center,
+//                       ),
+//                     );
+//                   } else {
+//                     return Center(child: Text('No address found.'));
+//                   }
+//                 } else {
+//                   return Center(child: Text('No data available.'));
+//                 }
 //               },
-//               child: const Text('Lấy Dữ Liệu Thời Tiết'),
-//             ),
-//             const SizedBox(height: 20),
-//             if (_temperature.isNotEmpty)
-//               Column(
-//                 children: [
-//                   Text(
-//                     'Nhiệt độ: $_temperature°C',
-//                     style: const TextStyle(fontSize: 24),
-//                   ),
-//                   Text(
-//                     'Mô tả: $_description',
-//                     style: const TextStyle(fontSize: 24),
-//                   ),
-//                   Image.network(
-//                     'https:${_icon}',
-//                   ),
-//                 ],
-//               ),
-//             if (_errorMessage.isNotEmpty)
-//               Text(
-//                 _errorMessage,
-//                 style: const TextStyle(color: Colors.red, fontSize: 24),
-//               ),
-//           ],
-//         ),
+//             );
+//           } else {
+//             return Center(child: Text('No location data available.'));
+//           }
+//         },
 //       ),
 //     );
 //   }
 // }
+//
+// void main() => runApp(MaterialApp(home: LocationScreen()));
