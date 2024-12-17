@@ -4,6 +4,8 @@ import 'package:freechat_dialogflow/View/logoApp_view.dart';
 import 'package:freechat_dialogflow/firebase_options.dart';
 import 'package:get/get.dart';
 
+import 'View/main_screen_view.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -24,8 +26,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      home: const LogoAppView(),
-      // home: const MainScreenView(),
+      // home: const LogoAppView(),
+      home: const MainScreenView(),
     );
   }
 }

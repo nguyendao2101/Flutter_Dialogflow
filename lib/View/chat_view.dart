@@ -108,9 +108,9 @@ class _ChatScreenState extends State<ChatScreen> {
     _scrollToBottom();
 
     try {
-      AuthGoogle authGoogle =
-          await AuthGoogle(fileJson: "assets/myagent-xoge-e5bc4acd332b.json")
-              .build();
+      AuthGoogle authGoogle = await AuthGoogle(
+              fileJson: "assets/testchatbot-epwa-46be8e97c02b.json")
+          .build();
       DialogFlow dialogFlow =
           DialogFlow(authGoogle: authGoogle, language: Language.english);
 

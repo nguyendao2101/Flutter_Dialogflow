@@ -26,7 +26,9 @@ class LocationService {
 
     // Lấy vị trí hiện tại
     Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+        desiredAccuracy: LocationAccuracy.high,
+      forceAndroidLocationManager: true, // Sử dụng GPS
+    );
 
     // Lấy địa chỉ từ tọa độ
     List<Placemark> placemarks = await placemarkFromCoordinates(
