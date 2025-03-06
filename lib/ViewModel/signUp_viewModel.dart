@@ -123,19 +123,19 @@ class SignupViewmodel extends GetxController {
 
   String? validatorPassword(String? value) {
     if ((value ?? '').isEmpty) {
-      return 'Password không được để trống';
+      return 'Mật khẩu không được để trống';
     } else if ((value ?? '').length < 6) {
-      return 'Password không được nhỏ hơn 6 ký tự';
+      return 'Mật khẩu không được nhỏ hơn 6 ký tự';
     } else if (value!.contains(' ')) {
-      return 'Password không được chứa khoảng trắng';
+      return 'Mật khẩu không được chứa khoảng trắng';
     } else if (!containsUppercaseLetter(value)) {
-      return 'Password cần chứa ít nhất 1 ký tự viết hoa';
+      return 'Mật khẩu cần chứa ít nhất 1 ký tự viết hoa';
     } else if (!containsLowercaseLetter(value)) {
-      return 'Password cần chứa ít nhất 1 ký tự viết thường';
+      return 'Mật khẩu cần chứa ít nhất 1 ký tự viết thường';
     } else if (!containsDigit(value)) {
-      return 'Password cần chứa ít nhất 1 chữ số';
+      return 'Mật khẩu cần chứa ít nhất 1 chữ số';
     } else if (!containsSpecialCharacters(value)) {
-      return 'Password cần chứa ít nhất 1 ký tự đặc biệt';
+      return 'Mật khẩu cần chứa ít nhất 1 ký tự đặc biệt';
     } else {
       return null;
     }
@@ -143,7 +143,7 @@ class SignupViewmodel extends GetxController {
 
   String? validatorConfirmPassword(String? value) {
     if (value != password) {
-      return 'Password nhập lại không khớp';
+      return 'Mật khẩu nhập lại không khớp';
     } else {
       return null;
     }

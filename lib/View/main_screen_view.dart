@@ -69,7 +69,7 @@ class _MainScreenViewState extends State<MainScreenView>
                   unselectedLabelStyle: const TextStyle(fontSize: 10),
                   tabs: [
                     Tab(
-                      text: 'History',
+                      text: 'Lịch sử',
                       icon: Image.asset(
                         selectTab == 0
                             ? ImageAssest.history
@@ -79,7 +79,7 @@ class _MainScreenViewState extends State<MainScreenView>
                       ),
                     ),
                     Tab(
-                      text: 'Home',
+                      text: 'Trang chủ',
                       icon: Image.asset(
                         selectTab == 1 ? ImageAssest.home : ImageAssest.homeUn,
                         width: 24,
@@ -87,7 +87,7 @@ class _MainScreenViewState extends State<MainScreenView>
                       ),
                     ),
                     Tab(
-                      text: 'User',
+                      text: 'Tôi',
                       icon: Image.asset(
                         selectTab == 2 ? ImageAssest.user : ImageAssest.userUn,
                         width: 24,

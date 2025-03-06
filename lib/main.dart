@@ -21,13 +21,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Chatbot',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      // home: const LogoAppView(),
-      home: const MainScreenView(),
+      home: const LogoAppView(),
+      // home: const MainScreenView(),
     );
   }
 }

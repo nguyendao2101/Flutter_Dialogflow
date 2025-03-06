@@ -51,7 +51,7 @@ class _SettingsViewState extends State<SettingsView> {
       appBar: AppBar(
         backgroundColor: ChatColor.background,
         elevation: 0,
-        title: Text('User Information',
+        title: Text('Thông tin người dùng',
             style: TextStyle(
                 color: ChatColor.almond,
                 fontSize: 25,
@@ -165,7 +165,7 @@ class _SettingsViewState extends State<SettingsView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Favourite Messages',
+                    'Tin nhắn yêu thích',
                     style: TextStyle(
                       color: ChatColor.almond,
                       fontSize: 18,

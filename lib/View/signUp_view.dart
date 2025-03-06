@@ -65,7 +65,7 @@ class SignUpScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
                     child: TextFormField(
                       decoration: InputDecoration(
-                        labelText: 'Password',
+                        labelText: 'Mật Khẩu',
                         filled: true,
                         fillColor: ChatColor.gray1,
                         suffixIcon: IconButton(
@@ -90,7 +90,7 @@ class SignUpScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
                     child: TextFormField(
                       decoration: InputDecoration(
-                        labelText: 'Nhập lại Password',
+                        labelText: 'Nhập lại mật khẩu',
                         filled: true,
                         fillColor: ChatColor.gray1,
                         suffixIcon: IconButton(

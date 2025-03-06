@@ -207,16 +207,18 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       backgroundColor: ChatColor.background,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: ChatColor.background,
         iconTheme: IconThemeData(color: ChatColor.gray4),
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Chat',
+              'Trò chuyện',
               style: TextStyle(
                   fontSize: 24, height: 1.75, color: ChatColor.almond),
             ),
+            const Spacer(),
             Row(
               children: [
                 InkWell(

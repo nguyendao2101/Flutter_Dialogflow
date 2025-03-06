@@ -29,7 +29,7 @@ class LoginView extends StatelessWidget {
                     ),
                     const SizedBox(height: 64),
                     Text(
-                      'Hi, Welcom back',
+                      'Xin chào,\nChào mừng bạn trở lại',
                       style: TextStyle(
                         color: ChatColor.almond,
                         fontSize: 25,
@@ -47,7 +47,7 @@ class LoginView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            'Forgot password?',
+                            'Quên mật khẩu?',
                             style: TextStyle(
                               fontSize: 10,
                               color: ChatColor.almond2,
@@ -70,7 +70,7 @@ class LoginView extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                               backgroundColor: ChatColor.almond),
                           child: const Text(
-                            'Sign In',
+                            'Đăng Nhập',
                             textAlign: TextAlign.center,
                             style: TextStyle(color: Colors.black),
                           ),
@@ -83,7 +83,7 @@ class LoginView extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                               backgroundColor: ChatColor.almond),
                           child: const Text(
-                            'Sign Up',
+                            'Đăng Ký',
                             textAlign: TextAlign.center,
                             style: TextStyle(color: Colors.black),
                           ),
@@ -143,7 +143,7 @@ class LoginView extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.0),
             child: Text(
-              'Or continue with',
+              'Hoặc tiếp tục với',
               style: TextStyle(color: Color(0xFF616161)),
             ),
           ),
@@ -166,7 +166,7 @@ class LoginView extends StatelessWidget {
           controller: controller.passwordController,
           obscureText: controller.isObscured.value,
           decoration: InputDecoration(
-            labelText: 'Password',
+            labelText: 'Mật Khẩu',
             enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.black),
             ),
@@ -175,7 +175,7 @@ class LoginView extends StatelessWidget {
             ),
             fillColor: Colors.grey.shade200,
             filled: true,
-            hintText: 'Password',
+            hintText: 'Mật Khẩu',
             suffixIcon: GestureDetector(
               onTap: () => controller.toggleObscureText(),
               child: Icon(controller.isObscured.value

@@ -55,9 +55,9 @@ class LoginViewmodel extends GetxController {
 
   String? validatorPassword(String? password) {
     if ((password ?? '').isEmpty) {
-      return 'Password không được để trống';
+      return 'Mật khẩu không được để trống';
     } else if ((password ?? '').length < 6) {
-      return 'Password không được nhỏ hơn 6 ký tự';
+      return 'Mật khẩu không được nhỏ hơn 6 ký tự';
     } else {
       return null;
     }

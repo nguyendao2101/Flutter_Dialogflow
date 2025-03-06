@@ -132,8 +132,7 @@ class _HomeViewState extends State<HomeView> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
-                    height: 173,
-                    width: 396,
+                    width: double.infinity,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
                         color: ChatColor.almond),
@@ -149,16 +148,16 @@ class _HomeViewState extends State<HomeView> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Tap to Chat',
+                                'Nhấn để trò chuyện',
                                 style: TextStyle(
-                                    fontSize: 32,
+                                    fontSize: 28,
                                     height: 2.25,
                                     color: ChatColor.background,
                                     fontWeight: FontWeight.bold),
                               ),
                               Image.asset(
                                 ImageAssest.arrowRight,
-                                width: 64,
+                                width: 60,
                                 height: 52.48,
                               ),
                             ],
@@ -169,19 +168,46 @@ class _HomeViewState extends State<HomeView> {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(12.0),
-                          child: Image.asset(
-                            ImageAssest.askChatbotQuestion,
-                            width: 364,
-                            height: 57,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Image.asset(
+                                ImageAssest.logoHome,
+                                height: 40,
+                              ),
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    const SizedBox(height: 8,),
+                                    Container(
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: ChatColor.almond2,
+                                        borderRadius: const BorderRadius.only(
+                                          bottomLeft: Radius.circular(20),
+                                          bottomRight: Radius.circular(20),
+                                          topRight: Radius.circular(20),
+                                        ),
+                                      ),
+                                      child: const Padding(
+                                        padding: EdgeInsets.all(12),
+                                        child: Text('Hãy hỏi tôi bất kỳ câu hỏi nào bạn có. Tôi có thể trả lời tất cả các câu hỏi và trò chuyện với bạn về y tế.'),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
                           ),
                         ),
+                        const SizedBox(height: 20,),
                       ],
                     ),
                   ),
                 ),
               ),
               const SizedBox(height: 20),
-          _title('Calendar'),
+          _title('Lịch'),
               const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -228,12 +254,12 @@ class _HomeViewState extends State<HomeView> {
                         fontSize: 14, // Cỡ chữ của các ngày trong tháng hiện tại.
                       ),
 
-                      leadingDatesTextStyle: TextStyle(
+                      leadingDatesTextStyle: const TextStyle(
                         color: Colors.grey, // Màu chữ của các ngày tháng trước đó (màu xám).
                         fontSize: 14, // Cỡ chữ của các ngày tháng trước đó.
                       ),
 
-                      trailingDatesTextStyle: TextStyle(
+                      trailingDatesTextStyle: const TextStyle(
                         color: Colors.grey, // Màu chữ của các ngày tháng sau (màu xám).
                         fontSize: 14, // Cỡ chữ của các ngày tháng sau.
                       ),
@@ -250,88 +276,88 @@ class _HomeViewState extends State<HomeView> {
             ],
           ),
           const SizedBox(height: 20),
-          _title('Weather'),
-          const SizedBox(height: 20),
-
-              const SizedBox(height: 20),
-              if (_temperature.isNotEmpty)
-                Column(
-                  children: [
-                    Text(
-                      'Nhiệt độ: $_temperature°C',
-                      style: TextStyle(fontSize: 24, color: ChatColor.lightGray),
-                    ),
-                    Text(
-                      'Mô tả: $_description',
-                      style: TextStyle(fontSize: 24,color: ChatColor.lightGray),
-                    ),
-                    Image.network(
-                      'https:${_icon}',
-                    ),
-                  ],
-                ),
-              if (_errorMessage.isNotEmpty)
-                Text(
-                  _errorMessage,
-                  style: const TextStyle(color: Colors.red, fontSize: 24),
-                ),
-              const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: TextField(
-                  // nhập dữ liệu
-                  controller: _cityController, // lấy dữ liệu nhập vào
-                  decoration: const InputDecoration(
-                    labelText: 'Nhập tên thành phố',
-                    border: OutlineInputBorder(),
-                  ),
-                  style: TextStyle(color: ChatColor.lightGray),
-                ),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                // gửi yêu cầu lấy dữ liệu thời tiết
-                onPressed: () {
-                  fetchWeather(_cityController.text);
-                  _cityController.clear();
-                },
-                child: const Text('Lấy Dữ Liệu Thời Tiết'),
-              ),
-              const SizedBox(height: 10,),
-              FutureBuilder<String>(
-                future: LocationService().getCurrentLocationAndAddress(), // Gọi hàm lấy vị trí và thông tin địa chỉ
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator()); // Đang chờ
-                  } else if (snapshot.hasError) {
-                    return Center(child: Text('Error: ${snapshot.error}')); // Có lỗi
-                  } else if (snapshot.hasData) {
-                    location = snapshot.data!;
-                    print('location: ${getCity(location)}');
-                    return Center(
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(ImageAssest.marker, height: 24, width: 24,),
-                              const SizedBox(width: 10,),
-                              Text('Your Location', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.green),)
-                            ],
-                          ),
-                          Text(
-                            snapshot.data!, // Hiển thị thông tin vị trí và địa chỉ
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 18, color: Colors.blueAccent),
-                          ),
-                        ],
-                      ),
-                    );
-                  } else {
-                    return Center(child: Text('No location data available.')); // Không có dữ liệu
-                  }
-                },
-              ),
+          // _title('Weather'),
+          // const SizedBox(height: 20),
+          //
+          //     const SizedBox(height: 20),
+          //     if (_temperature.isNotEmpty)
+          //       Column(
+          //         children: [
+          //           Text(
+          //             'Nhiệt độ: $_temperature°C',
+          //             style: TextStyle(fontSize: 24, color: ChatColor.lightGray),
+          //           ),
+          //           Text(
+          //             'Mô tả: $_description',
+          //             style: TextStyle(fontSize: 24,color: ChatColor.lightGray),
+          //           ),
+          //           Image.network(
+          //             'https:${_icon}',
+          //           ),
+          //         ],
+          //       ),
+          //     if (_errorMessage.isNotEmpty)
+          //       Text(
+          //         _errorMessage,
+          //         style: const TextStyle(color: Colors.red, fontSize: 24),
+          //       ),
+          //     const SizedBox(height: 20),
+          //     Padding(
+          //       padding: const EdgeInsets.symmetric(horizontal: 12),
+          //       child: TextField(
+          //         // nhập dữ liệu
+          //         controller: _cityController, // lấy dữ liệu nhập vào
+          //         decoration: const InputDecoration(
+          //           labelText: 'Nhập tên thành phố',
+          //           border: OutlineInputBorder(),
+          //         ),
+          //         style: TextStyle(color: ChatColor.lightGray),
+          //       ),
+          //     ),
+          //     const SizedBox(height: 20),
+          //     ElevatedButton(
+          //       // gửi yêu cầu lấy dữ liệu thời tiết
+          //       onPressed: () {
+          //         fetchWeather(_cityController.text);
+          //         _cityController.clear();
+          //       },
+          //       child: const Text('Lấy Dữ Liệu Thời Tiết'),
+          //     ),
+          //     const SizedBox(height: 10,),
+          //     FutureBuilder<String>(
+          //       future: LocationService().getCurrentLocationAndAddress(), // Gọi hàm lấy vị trí và thông tin địa chỉ
+          //       builder: (context, snapshot) {
+          //         if (snapshot.connectionState == ConnectionState.waiting) {
+          //           return const Center(child: CircularProgressIndicator()); // Đang chờ
+          //         } else if (snapshot.hasError) {
+          //           return Center(child: Text('Error: ${snapshot.error}')); // Có lỗi
+          //         } else if (snapshot.hasData) {
+          //           location = snapshot.data!;
+          //           print('location: ${getCity(location)}');
+          //           return Center(
+          //             child: Column(
+          //               children: [
+          //                 Row(
+          //                   mainAxisAlignment: MainAxisAlignment.center,
+          //                   children: [
+          //                     Image.asset(ImageAssest.marker, height: 24, width: 24,),
+          //                     const SizedBox(width: 10,),
+          //                     const Text('Your Location', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.green),)
+          //                   ],
+          //                 ),
+          //                 Text(
+          //                   snapshot.data!, // Hiển thị thông tin vị trí và địa chỉ
+          //                   textAlign: TextAlign.center,
+          //                   style: const TextStyle(fontSize: 18, color: Colors.blueAccent),
+          //                 ),
+          //               ],
+          //             ),
+          //           );
+          //         } else {
+          //           return const Center(child: Text('No location data available.')); // Không có dữ liệu
+          //         }
+          //       },
+          //     ),
 
             ],
           ),
@@ -346,7 +372,7 @@ class _HomeViewState extends State<HomeView> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(title, style: TextStyle(fontSize: 16, color: ChatColor.lightGray, fontWeight: FontWeight.bold),),
-          Text('See more', style: TextStyle(fontSize: 16, color: ChatColor.gray7, fontWeight: FontWeight.bold),)
+          Text('Xem thêm', style: TextStyle(fontSize: 16, color: ChatColor.gray7, fontWeight: FontWeight.bold),)
         ],
       ),
     );

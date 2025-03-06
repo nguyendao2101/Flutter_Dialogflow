@@ -3,7 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:freechat_dialogflow/Widgets/common/color_extentionn.dart';
+
+import '../Widgets/common/color_extentionn.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -33,7 +34,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
         backgroundColor: ChatColor.background,
         iconTheme: IconThemeData(color: ChatColor.gray4),
         title: Text(
-          'Chat History',
+          'Lịch sử trò truyện',
           style: TextStyle(fontSize: 24, color: ChatColor.almond),
         ),
       ),

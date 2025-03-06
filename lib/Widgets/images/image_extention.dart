@@ -28,6 +28,7 @@ class ImageAssest {
   static String arrowRight = '$baseImagePath/arrowRight.png';
   static String askChatbotQuestion = '$baseImagePath/askChatbotQuestion.png';
   static String marker = '$baseImagePath/marker.png';
+  static String logoHome = '$baseImagePath/logo_home.png';
 
 
   //chat
