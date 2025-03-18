@@ -6,6 +6,7 @@ import 'package:dialogflow_flutter/language.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:freechat_dialogflow/ViewModel/user_view_model.dart';
 import 'package:get/get.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:freechat_dialogflow/Widgets/common/color_extention.dart';
@@ -29,7 +30,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final DatabaseReference _database =
       FirebaseDatabase.instance.ref(); // Reference to Firebase
   late String _userId; // Late initialization for userId
-
+  final controllerUser = Get.put(UserViewModel());
   @override
   void initState() {
     super.initState();
@@ -244,7 +245,9 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
                 const SizedBox(width: 20),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+
+                  },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: ChatColor.background,
                     backgroundColor: ChatColor.almond,
@@ -262,7 +265,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         height: 11.05,
                       ),
                       const SizedBox(width: 5),
-                      const Text('20'),
+                      Text(controllerUser.userData['money'].toString()),
                     ],
                   ),
                 )
@@ -383,11 +386,9 @@ class _ChatScreenState extends State<ChatScreen> {
                       child: InkWell(
                         onTap: _isListening ? _stopListening : _startListening,
                         child: Image.asset(
-                          _isListening
-                              ? ImageAssest.microphoneUn
-                              : ImageAssest.microphone,
-                          height: 18.5,
-                          width: 15.5,
+                          _isListening ? ImageAssest.microphoneUn : ImageAssest.microphone,
+                          height: _isListening ? 20.0 : 18.5,
+                          width: _isListening ? 24 : 24,
                         ),
                       ),
                     ),
