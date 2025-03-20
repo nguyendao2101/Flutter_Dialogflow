@@ -1,8 +1,9 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:freechat_dialogflow/fire_base/fire_base_auth.dart';
 import 'package:get/get.dart';
+
+import '../Model/fire_base/fire_base_auth.dart';
 
 class LoginViewmodel extends GetxController {
   late TextEditingController emailController = TextEditingController();

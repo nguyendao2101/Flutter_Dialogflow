@@ -1,21 +1,25 @@
 // ignore_for_file: file_names
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server/gmail.dart';
 
-class SignupViewmodel extends GetxController {
+class SignupViewModel extends GetxController {
   final FirebaseAuth _firAuth = FirebaseAuth.instance;
   final DatabaseReference _dbRef = FirebaseDatabase.instance.ref();
   final formKey = GlobalKey<FormState>();
 
-  String? email;
-  String? password;
-  String? confirmPassword;
-  String? hoTen;
-  String? address;
-  String? sex;
+  late String email;
+  late String password;
+  late String confirmPassword;
+  late String hoTen;
+  late String address;
+  late String sex;
 
   RxBool isEntryPasswordObscured = true.obs;
   RxBool isObscured = true.obs;
@@ -92,6 +96,53 @@ class SignupViewmodel extends GetxController {
     });
   }
 
+  Future<void> sendEmail(String email, String code) async {
+    String username = 'team.chatbotdialogflow@gmail.com'; // Email gửi
+    String password = 'cnyt mmwf mbxw army'; // Mật khẩu email gửi
+
+    final smtpServer = gmail(username, password);
+
+    final message = Message()
+      ..from = Address(username, 'ChatMate Team')
+      ..recipients.add(email)
+      ..subject = '🎁 Mã Xác Minh Tài Khoản Chatbot ChatMate'
+      ..html = '''
+    <html>
+      <body style="font-family: Arial, sans-serif; background-color: #f5f5f5; padding: 20px; color: #333;">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+          <h2 style="color: #007bff; text-align: center;">🌟 Chào mừng bạn đến với ChatMate! 🌟</h2>
+          <p style="font-size: 16px;">Cảm ơn bạn đã quan tâm và đăng ký tài khoản tại ChatMate.</p>
+          <p style="font-size: 16px;">Dưới đây là <strong>Mã xác minh</strong> của bạn:</p>
+          <div style="text-align: center; padding: 10px 0;">
+            <span style="font-size: 28px; color: #007bff; font-weight: bold; background-color: #e9ecef; padding: 10px 20px; border-radius: 5px;">$code</span>
+          </div>
+          <p style="font-size: 16px;">Hãy sử dụng mã này để hoàn tất quá trình đăng ký tài khoản.</p>
+          <hr style="margin: 20px 0;">
+          <p style="font-size: 14px; color: #888; text-align: center;">
+            Nếu bạn không yêu cầu mã này, vui lòng bỏ qua email này.  
+          </p>
+          <p style="text-align: center; color: #555; font-size: 14px;">
+            ❤️ Cảm ơn bạn đã tin tưởng và lựa chọn ChatMate!  
+          </p>
+        </div>
+      </body>
+    </html>
+    ''';
+
+    try {
+      await send(message, smtpServer);
+      print('✅ Email gửi thành công.');
+    } catch (e) {
+      print('❌ Gửi email thất bại: $e');
+    }
+  }
+
+  String generateVerificationCode() {
+    var random = Random();
+    return (random.nextInt(900000) + 100000)
+        .toString(); // Tạo số từ 100000 đến 999999
+  }
+
   bool containsSpecialCharacters(String text) {
     final allowedSpecialCharacters = RegExp(r'[!@#\$%^&*(),.?":{}|<>]');
     return allowedSpecialCharacters.hasMatch(text);
@@ -162,12 +213,12 @@ class SignupViewmodel extends GetxController {
   }
 
   void resetForm() {
-    email = null;
-    password = null;
-    confirmPassword = null;
-    hoTen = null;
-    address = null;
-    sex = null;
+    email = '';
+    password = '';
+    confirmPassword = '';
+    hoTen = '';
+    address = '';
+    sex = '';
     formKey.currentState?.reset();
   }
 }

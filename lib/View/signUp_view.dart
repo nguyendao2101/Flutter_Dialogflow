@@ -7,13 +7,26 @@ import 'package:freechat_dialogflow/Widgets/common/color_extentionn.dart';
 import 'package:freechat_dialogflow/Widgets/images/image_extention.dart';
 import 'package:get/get.dart';
 
-class SignUpScreen extends StatelessWidget {
-  final _viewModel = SignupViewmodel();
+import '../Widgets/common_widget/check_mail/check_mail.dart';
+
+class SignUpScreen extends StatefulWidget {
 
   SignUpScreen({super.key});
 
   @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  final _viewModel = SignupViewModel();
+
+  late String codeMail;
+
+
+
+  @override
   Widget build(BuildContext context) {
+    codeMail = _viewModel.generateVerificationCode().toString();
     return Scaffold(
       backgroundColor: ChatColor.background,
       appBar: AppBar(
@@ -155,43 +168,54 @@ class SignUpScreen extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     if (_viewModel.isValidSignupForm()) {
-                      _viewModel.isLoading.value = true;
-                      _viewModel.signUp(
-                        _viewModel.email ?? '',
-                        _viewModel.password ?? '',
-                        _viewModel.confirmPassword ?? '',
-                        _viewModel.hoTen ?? '',
-                        _viewModel.address ?? '',
-                        _viewModel.sex ?? '',
-                        () {
-                          _viewModel.isLoading.value = false;
-                          Get.snackbar(
-                            'Success',
-                            'Đăng ký thành công',
-                            snackPosition: SnackPosition.BOTTOM,
-                          );
-
-                          // Reset form state if needed
-                          _viewModel.resetForm();
-
-                          // Navigate to Login Screen
-                          Get.offAll(() => const LoginView());
-                        },
-                        (error) {
-                          _viewModel.isLoading.value = false;
-                          Get.snackbar(
-                            'Error',
-                            error,
-                            snackPosition: SnackPosition.BOTTOM,
-                          );
-                        },
-                      );
+                      _viewModel.sendEmail(
+                          _viewModel.email, codeMail.toString());
+                      print('test ma code1: $codeMail');
+                      Get.to(() => CheckMail(
+                        email: _viewModel.email,
+                        password: _viewModel.password,
+                        fullName: _viewModel.hoTen,
+                        address: _viewModel.address,
+                        sex: _viewModel.sex,
+                        verificationCode: codeMail.toString(),
+                      ));
+                      // _viewModel.isLoading.value = true;
+                      // _viewModel.signUp(
+                      //   _viewModel.email ?? '',
+                      //   _viewModel.password ?? '',
+                      //   _viewModel.confirmPassword ?? '',
+                      //   _viewModel.hoTen ?? '',
+                      //   _viewModel.address ?? '',
+                      //   _viewModel.sex ?? '',
+                      //   () {
+                      //     _viewModel.isLoading.value = false;
+                      //     Get.snackbar(
+                      //       'Success',
+                      //       'Đăng ký thành công',
+                      //       snackPosition: SnackPosition.BOTTOM,
+                      //     );
+                      //
+                      //     // Reset form state if needed
+                      //     _viewModel.resetForm();
+                      //
+                      //     // Navigate to Login Screen
+                      //     Get.offAll(() => const LoginView());
+                      //   },
+                      //   (error) {
+                      //     _viewModel.isLoading.value = false;
+                      //     Get.snackbar(
+                      //       'Error',
+                      //       error,
+                      //       snackPosition: SnackPosition.BOTTOM,
+                      //     );
+                      //   },
+                      // );
                     }
                   },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: ChatColor.almond),
                   child: Text(
-                    'Đăng ký',
+                    'Tiếp tục',
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,

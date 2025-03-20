@@ -108,8 +108,8 @@ class FirAuth {
   }
 
   void _createUser(String userId, String hoTen, String addRess, String sex,
-      Function onSuccess) {
-    var user = {'HoTen': hoTen, 'AddRess': addRess, 'Sex': sex};
+  Function onSuccess) {
+    var user = {'HoTen': hoTen, 'AddRess': addRess, 'Sex': sex, 'money': 0, 'ranking':'normal'};
     var ref = FirebaseDatabase.instance.ref().child('users'); // Updated here
     ref.child(userId).set(user).then((_) {
       onSuccess();
