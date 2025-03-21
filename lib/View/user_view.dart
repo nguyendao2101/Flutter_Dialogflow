@@ -3,8 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:freechat_dialogflow/View/login_view.dart';
 import 'package:freechat_dialogflow/ViewModel/user_view_model.dart';
 import 'package:freechat_dialogflow/Widgets/common/color_extentionn.dart';
+import 'package:freechat_dialogflow/Widgets/common_widget/basic_app_button/basic_app_button.dart';
 import 'package:freechat_dialogflow/Widgets/images/image_extention.dart';
 import 'package:get/get.dart';
 
@@ -72,6 +74,13 @@ class _SettingsViewState extends State<SettingsView> {
               _buildUserInfoCard(),
               const SizedBox(height: 20),
               _buildFavouriteMessagesCard(),
+              const SizedBox(height: 40),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 100),
+                child: BasicAppButton(onPressed: (){
+                    Get.offAll(() => const LoginView());
+                }, title: 'LogOut', sizeTitle: 18, height: 44, colorButton: Color(0xffA31D1D), radius: 12,),
+              )
             ],
           ),
         ),
@@ -119,6 +128,7 @@ class _SettingsViewState extends State<SettingsView> {
                   _buildUserInfoRow('Address', controller.userData['address']),
                   const Divider(color: Colors.white24),
                   _buildUserInfoRow('Sex', controller.userData['sex']),
+                  _buildUserInfoRow('Ranking', controller.userData['ranking'].toString()),
                   _buildUserInfoRow('Money', controller.userData['money'].toString()),
                 ],
               ),

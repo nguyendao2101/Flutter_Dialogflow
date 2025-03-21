@@ -13,6 +13,8 @@ class CheckMail extends StatefulWidget {
   final String fullName;
   final String address;
   final String sex;
+  final double? money;
+  final String? ranking;
   final String verificationCode; // Mã xác minh từ controller
 
   const CheckMail({
@@ -22,7 +24,7 @@ class CheckMail extends StatefulWidget {
     required this.fullName,
     required this.address,
     required this.sex,
-    required this.verificationCode, // Thêm mã xác minh
+    required this.verificationCode, this.money, this.ranking, // Thêm mã xác minh
   });
 
   @override
@@ -109,6 +111,8 @@ class _CheckMailState extends State<CheckMail> {
         widget.fullName ?? '',
         widget.address ?? '',
         widget.sex ?? '',
+        widget.money ?? 0,
+        widget.ranking ?? 'normal',
             () {
           controller.isLoading.value = false;
           controller.resetForm();

@@ -75,6 +75,8 @@ class SignupViewModel extends GetxController {
       String hoTen,
       String addRess,
       String sex,
+      double? money,
+      String? ranking,
       Function onSuccess,
       Function(String) onError) {
     _firAuth
@@ -86,6 +88,8 @@ class SignupViewModel extends GetxController {
         'fullName': hoTen,
         'address': addRess,
         'sex': sex,
+        'money': money,
+        'ranking': ranking,
       }).then((_) {
         onSuccess();
       }).catchError((error) {
