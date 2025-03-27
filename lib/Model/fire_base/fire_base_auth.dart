@@ -68,7 +68,7 @@ class FirAuth {
       Function onSuccess) {
     // Đảm bảo giá trị mặc định nếu tham số bị null
     money ??= 0;
-    ranking ??= 'normal';
+    ranking ??= 'Normal';
 
     var user = {
       'HoTen': hoTen,

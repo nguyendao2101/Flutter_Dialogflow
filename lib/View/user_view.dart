@@ -10,6 +10,9 @@ import 'package:freechat_dialogflow/Widgets/common_widget/basic_app_button/basic
 import 'package:freechat_dialogflow/Widgets/images/image_extention.dart';
 import 'package:get/get.dart';
 
+import '../Widgets/common_widget/user/favourite_message_card.dart';
+import '../Widgets/common_widget/user/upgrate_ranking_and_by_coins.dart';
+
 class SettingsView extends StatefulWidget {
   const SettingsView({super.key});
 
@@ -19,36 +22,13 @@ class SettingsView extends StatefulWidget {
 
 class _SettingsViewState extends State<SettingsView> {
   final controller = Get.put(UserViewModel());
-  // late DatabaseReference _database;
-  // late String _userId;
-  // Map<String, dynamic> _userData = {};
-  //
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _database = FirebaseDatabase.instance.ref();
-  //   _initializeUserId();
-  // }
-  //
-  // void _initializeUserId() async {
-  //   User? user = FirebaseAuth.instance.currentUser;
-  //   if (user != null) {
-  //     _userId = user.uid;
-  //     _getUserData();
-  //   } else {}
-  // }
-  //
-  // void _getUserData() async {
-  //   DatabaseReference userRef = _database.child('users/$_userId');
-  //   DataSnapshot snapshot = await userRef.get();
-  //
-  //   if (snapshot.exists) {
-  //     setState(() {
-  //       _userData = Map<String, dynamic>.from(snapshot.value as Map);
-  //     });
-  //   } else {}
-  // }
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller.initializeUserId();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,13 +53,15 @@ class _SettingsViewState extends State<SettingsView> {
               const SizedBox(height: 20),
               _buildUserInfoCard(),
               const SizedBox(height: 20),
-              _buildFavouriteMessagesCard(),
+              UpgradeAndBuyCoinsCard(userData: controller.userData),
+              const SizedBox(height: 20),
+              FavouriteMessageCard(userData: controller.userData),
               const SizedBox(height: 40),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 100),
                 child: BasicAppButton(onPressed: (){
                     Get.offAll(() => const LoginView());
-                }, title: 'LogOut', sizeTitle: 18, height: 44, colorButton: Color(0xffA31D1D), radius: 12,),
+                }, title: 'LogOut', sizeTitle: 18, height: 44, colorButton: const Color(0xffA31D1D), radius: 12,),
               )
             ],
           ),
@@ -93,13 +75,13 @@ class _SettingsViewState extends State<SettingsView> {
       width:
           110, // Kích thước tổng thể của hình đại diện (bằng với radius*2 + borderWidth)
       height: 110,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: ChatColor.almond, // Màu của viền ngoài
-          width: 4.0, // Độ dày của viền ngoài
-        ),
-      ),
+      // decoration: BoxDecoration(
+      //   shape: BoxShape.circle,
+      //   border: Border.all(
+      //     color: ChatColor.almond, // Màu của viền ngoài
+      //     width: 4.0, // Độ dày của viền ngoài
+      //   ),
+      // ),
       child: CircleAvatar(
         radius: 50, // Kích thước của hình đại diện
         backgroundImage: AssetImage(ImageAssest.user),
@@ -121,15 +103,17 @@ class _SettingsViewState extends State<SettingsView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildUserInfoRow('Full Name', controller.userData['fullName']),
+                  _buildUserInfoRow('Tên', controller.userData['fullName']),
                   const Divider(color: Colors.white24),
                   _buildUserInfoRow('Email', controller.userData['email']),
                   const Divider(color: Colors.white24),
-                  _buildUserInfoRow('Address', controller.userData['address']),
+                  _buildUserInfoRow('Địa chỉ', controller.userData['address']),
                   const Divider(color: Colors.white24),
-                  _buildUserInfoRow('Sex', controller.userData['sex']),
-                  _buildUserInfoRow('Ranking', controller.userData['ranking'].toString()),
-                  _buildUserInfoRow('Money', controller.userData['money'].toString()),
+                  _buildUserInfoRow('Giới tính', controller.userData['sex']),
+                  const Divider(color: Colors.white24),
+                  _buildUserInfoRow('Hạng', controller.userData['ranking'].toString()),
+                  const Divider(color: Colors.white24),
+                  _buildUserInfoRow('Ví', '${controller.userData['money'].toString()} coins'),
                 ],
               ),
             ),
@@ -163,61 +147,6 @@ class _SettingsViewState extends State<SettingsView> {
         ],
       ),
     );
-  }
-
-  Widget _buildFavouriteMessagesCard() {
-    return controller.userData.isNotEmpty && (controller.userData['favouriteMessages']?.isNotEmpty ?? false)
-        ? Card(
-      color: ChatColor.gray1,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
-      elevation: 5,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Tin nhắn yêu thích',
-              style: TextStyle(
-                color: ChatColor.almond,
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            const SizedBox(height: 10),
-            ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: controller.userData['favouriteMessages'].length,
-              separatorBuilder: (context, index) => const Divider(
-                color: Colors.white24,
-                thickness: 0.5,
-              ),
-              itemBuilder: (context, index) {
-                final message = controller.userData['favouriteMessages'][index];
-                return Container(
-                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                        child: Text(
-                          message,
-                          style: const TextStyle(
-                            color: Colors.white70,
-                            fontSize: 16,
-                          ),
-                        ),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-    )
-        : const SizedBox.shrink();
   }
 
 }

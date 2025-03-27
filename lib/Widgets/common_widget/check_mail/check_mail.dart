@@ -112,7 +112,7 @@ class _CheckMailState extends State<CheckMail> {
         widget.address ?? '',
         widget.sex ?? '',
         widget.money ?? 0,
-        widget.ranking ?? 'normal',
+        widget.ranking ?? 'Normal',
             () {
           controller.isLoading.value = false;
           controller.resetForm();

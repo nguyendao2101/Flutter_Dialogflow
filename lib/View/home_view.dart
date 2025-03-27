@@ -9,6 +9,7 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import '../Model/location_model.dart';
 import '../Model/weather_model.dart';
+import '../ViewModel/user_view_model.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -25,7 +26,8 @@ class _HomeViewState extends State<HomeView> {
   String _errorMessage = ''; //biến để lưu trữ thông báo lỗi nếu có
   final WeatherService _weatherService = WeatherService();
   String location = ' '; // biến lưu vị trí hiện tại
-
+  final controller = Get.put(UserViewModel());
+  RxMap<dynamic, dynamic> userData = {}.obs;
 
   String getCity(String location) {
     // Tách chuỗi location theo dấu phẩy (',') thành một danh sách
@@ -57,6 +59,13 @@ class _HomeViewState extends State<HomeView> {
         _errorMessage = 'Không tìm thấy thời tiết thành phố này';
       });
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    userData = controller.userData;
   }
   @override
   Widget build(BuildContext context) {
@@ -111,7 +120,7 @@ class _HomeViewState extends State<HomeView> {
                     ),
                     const SizedBox(
                         width: 5), // Khoảng cách giữa biểu tượng và văn bản
-                    const Text('20'),
+                    Text(controller.userData['money'].toString()),
                   ],
                 ),
               )
