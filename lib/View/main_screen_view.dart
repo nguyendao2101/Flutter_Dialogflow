@@ -64,7 +64,7 @@ class _MainScreenViewState extends State<MainScreenView>
                   indicatorColor: ChatColor.gray1,
                   indicatorWeight: 1,
                   labelColor: ChatColor.almond,
-                  labelStyle: const TextStyle(fontSize: 10),
+                  labelStyle: const TextStyle(fontSize: 10, fontFamily: 'PlusJakartaSans'),
                   unselectedLabelColor: ChatColor.almond,
                   unselectedLabelStyle: const TextStyle(fontSize: 10),
                   tabs: [

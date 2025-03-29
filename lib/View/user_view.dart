@@ -40,7 +40,8 @@ class _SettingsViewState extends State<SettingsView> {
             style: TextStyle(
                 color: ChatColor.almond,
                 fontSize: 25,
-                fontWeight: FontWeight.bold)),
+                fontWeight: FontWeight.bold,
+            fontFamily: 'PlusJakartaSans')),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -135,6 +136,7 @@ class _SettingsViewState extends State<SettingsView> {
               color: ChatColor.almond,
               fontSize: 16,
               fontWeight: FontWeight.w500,
+              fontFamily: 'PlusJakartaSans',
             ),
           ),
           Text(
@@ -142,6 +144,7 @@ class _SettingsViewState extends State<SettingsView> {
             style: const TextStyle(
               color: Colors.white70,
               fontSize: 16,
+              fontFamily: 'PlusJakartaSans',
             ),
           ),
         ],

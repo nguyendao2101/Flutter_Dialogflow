@@ -35,7 +35,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
         iconTheme: IconThemeData(color: ChatColor.gray4),
         title: Text(
           'Lịch sử trò truyện',
-          style: TextStyle(fontSize: 24, color: ChatColor.almond),
+          style: TextStyle(fontSize: 24, color: ChatColor.almond, fontFamily: 'PlusJakartaSans'),
         ),
       ),
       body: _currentUser == null
@@ -140,6 +140,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       color: ChatColor.almond,
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
+                      fontFamily: 'PlusJakartaSans',
                     ),
                   ),
                   Text(
@@ -147,6 +148,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     style: TextStyle(
                       color: ChatColor.gray4,
                       fontSize: 14,
+                      fontFamily: 'PlusJakartaSans',
                     ),
                   ),
                 ],
@@ -169,6 +171,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   style: const TextStyle(
                     color: Colors.white70,
                     fontSize: 16,
+                    fontFamily: 'PlusJakartaSans',
                   ),
                 ),
               ),
@@ -184,6 +187,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   style: const TextStyle(
                     color: Colors.white70,
                     fontSize: 16,
+                    fontFamily: 'PlusJakartaSans',
                   ),
                 ),
               ),

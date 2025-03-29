@@ -155,7 +155,7 @@ class _CheckMailState extends State<CheckMail> {
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w500,
-                  fontFamily: 'Poppins',
+                  fontFamily: 'PlusJakartaSans',
                   color: Colors.black,
                 ),
               ),
@@ -165,7 +165,7 @@ class _CheckMailState extends State<CheckMail> {
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
-                  fontFamily: 'Poppins',
+                  fontFamily: 'PlusJakartaSans',
                   color: Color(0xff32343E),
                 ),
               ),
@@ -174,7 +174,7 @@ class _CheckMailState extends State<CheckMail> {
                 text: TextSpan(
                   style: const TextStyle(
                     fontSize: 16,
-                    fontFamily: 'Poppins',
+                    fontFamily: 'PlusJakartaSans',
                     fontWeight: FontWeight.w600,
                     color: Color(0xff0D0D0D),
                   ),
@@ -232,7 +232,7 @@ class _CheckMailState extends State<CheckMail> {
                       color: Color(0xff0D0D0D),
                       fontWeight: FontWeight.w600,
                       fontSize: 16,
-                      fontFamily: 'Poppins',
+                      fontFamily: 'PlusJakartaSans',
                     ),
                   ),
                 ],
@@ -254,7 +254,7 @@ class _CheckMailState extends State<CheckMail> {
                   text: const TextSpan(
                     style: TextStyle(
                       fontSize: 14,
-                      fontFamily: 'Poppins',
+                      fontFamily: 'PlusJakartaSans',
                       fontWeight: FontWeight.w400,
                       color: Color(0xff868686),
                     ),

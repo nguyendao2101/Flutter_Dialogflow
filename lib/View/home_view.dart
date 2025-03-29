@@ -94,6 +94,7 @@ class _HomeViewState extends State<HomeView> {
                         fontSize: 24,
                         height: 1.75,
                         color: ChatColor.almond,
+                        fontFamily: 'PlusJakartaSans',
                         fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -162,6 +163,7 @@ class _HomeViewState extends State<HomeView> {
                                     fontSize: 28,
                                     height: 2.25,
                                     color: ChatColor.background,
+                                    fontFamily: 'PlusJakartaSans',
                                     fontWeight: FontWeight.bold),
                               ),
                               Image.asset(
@@ -200,7 +202,7 @@ class _HomeViewState extends State<HomeView> {
                                       ),
                                       child: const Padding(
                                         padding: EdgeInsets.all(12),
-                                        child: Text('Hãy hỏi tôi bất kỳ câu hỏi nào bạn có. Tôi có thể trả lời tất cả các câu hỏi và trò chuyện với bạn về y tế.'),
+                                        child: Text('Hãy hỏi tôi bất kỳ câu hỏi nào bạn có. Tôi có thể trả lời tất cả các câu hỏi và trò chuyện với bạn về y tế.', style: TextStyle(fontFamily: 'PlusJakartaSans'),),
                                       ),
                                     ),
                                   ],
@@ -235,6 +237,7 @@ class _HomeViewState extends State<HomeView> {
                       fontSize: 20, // Cỡ chữ của tiêu đề tháng.
                       color: ChatColor.background, // Màu chữ của tiêu đề tháng.
                       fontWeight: FontWeight.bold, // Đặt tiêu đề tháng đậm.
+                      fontFamily: 'PlusJakartaSans',
                     ),
                   ),
 
@@ -243,6 +246,7 @@ class _HomeViewState extends State<HomeView> {
                     dayTextStyle: TextStyle(
                       fontSize: 16, // Cỡ chữ của ngày trong tiêu đề tuần.
                       color: ChatColor.background, // Màu chữ của ngày trong tiêu đề tuần.
+                      fontFamily: 'PlusJakartaSans',
                     ),
                   ),
 
@@ -261,22 +265,26 @@ class _HomeViewState extends State<HomeView> {
                       textStyle: TextStyle(
                         color: ChatColor.gray4, // Màu chữ của các ngày trong tháng hiện tại.
                         fontSize: 14, // Cỡ chữ của các ngày trong tháng hiện tại.
+                        fontFamily: 'PlusJakartaSans',
                       ),
 
                       leadingDatesTextStyle: const TextStyle(
                         color: Colors.grey, // Màu chữ của các ngày tháng trước đó (màu xám).
                         fontSize: 14, // Cỡ chữ của các ngày tháng trước đó.
+                        fontFamily: 'PlusJakartaSans',
                       ),
 
                       trailingDatesTextStyle: const TextStyle(
                         color: Colors.grey, // Màu chữ của các ngày tháng sau (màu xám).
                         fontSize: 14, // Cỡ chữ của các ngày tháng sau.
+                        fontFamily: 'PlusJakartaSans',
                       ),
 
                       todayTextStyle: TextStyle(
                         color: ChatColor.background, // Màu chữ cho ngày hôm nay.
                         fontWeight: FontWeight.bold, // Chữ ngày hôm nay sẽ in đậm.
                         fontSize: 16, // Cỡ chữ của ngày hôm nay.
+                        fontFamily: 'PlusJakartaSans',
                       ),
                     ),
                   ),
@@ -285,89 +293,6 @@ class _HomeViewState extends State<HomeView> {
             ],
           ),
           const SizedBox(height: 20),
-          // _title('Weather'),
-          // const SizedBox(height: 20),
-          //
-          //     const SizedBox(height: 20),
-          //     if (_temperature.isNotEmpty)
-          //       Column(
-          //         children: [
-          //           Text(
-          //             'Nhiệt độ: $_temperature°C',
-          //             style: TextStyle(fontSize: 24, color: ChatColor.lightGray),
-          //           ),
-          //           Text(
-          //             'Mô tả: $_description',
-          //             style: TextStyle(fontSize: 24,color: ChatColor.lightGray),
-          //           ),
-          //           Image.network(
-          //             'https:${_icon}',
-          //           ),
-          //         ],
-          //       ),
-          //     if (_errorMessage.isNotEmpty)
-          //       Text(
-          //         _errorMessage,
-          //         style: const TextStyle(color: Colors.red, fontSize: 24),
-          //       ),
-          //     const SizedBox(height: 20),
-          //     Padding(
-          //       padding: const EdgeInsets.symmetric(horizontal: 12),
-          //       child: TextField(
-          //         // nhập dữ liệu
-          //         controller: _cityController, // lấy dữ liệu nhập vào
-          //         decoration: const InputDecoration(
-          //           labelText: 'Nhập tên thành phố',
-          //           border: OutlineInputBorder(),
-          //         ),
-          //         style: TextStyle(color: ChatColor.lightGray),
-          //       ),
-          //     ),
-          //     const SizedBox(height: 20),
-          //     ElevatedButton(
-          //       // gửi yêu cầu lấy dữ liệu thời tiết
-          //       onPressed: () {
-          //         fetchWeather(_cityController.text);
-          //         _cityController.clear();
-          //       },
-          //       child: const Text('Lấy Dữ Liệu Thời Tiết'),
-          //     ),
-          //     const SizedBox(height: 10,),
-          //     FutureBuilder<String>(
-          //       future: LocationService().getCurrentLocationAndAddress(), // Gọi hàm lấy vị trí và thông tin địa chỉ
-          //       builder: (context, snapshot) {
-          //         if (snapshot.connectionState == ConnectionState.waiting) {
-          //           return const Center(child: CircularProgressIndicator()); // Đang chờ
-          //         } else if (snapshot.hasError) {
-          //           return Center(child: Text('Error: ${snapshot.error}')); // Có lỗi
-          //         } else if (snapshot.hasData) {
-          //           location = snapshot.data!;
-          //           print('location: ${getCity(location)}');
-          //           return Center(
-          //             child: Column(
-          //               children: [
-          //                 Row(
-          //                   mainAxisAlignment: MainAxisAlignment.center,
-          //                   children: [
-          //                     Image.asset(ImageAssest.marker, height: 24, width: 24,),
-          //                     const SizedBox(width: 10,),
-          //                     const Text('Your Location', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.green),)
-          //                   ],
-          //                 ),
-          //                 Text(
-          //                   snapshot.data!, // Hiển thị thông tin vị trí và địa chỉ
-          //                   textAlign: TextAlign.center,
-          //                   style: const TextStyle(fontSize: 18, color: Colors.blueAccent),
-          //                 ),
-          //               ],
-          //             ),
-          //           );
-          //         } else {
-          //           return const Center(child: Text('No location data available.')); // Không có dữ liệu
-          //         }
-          //       },
-          //     ),
-
             ],
           ),
         ),
@@ -380,8 +305,8 @@ class _HomeViewState extends State<HomeView> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title, style: TextStyle(fontSize: 16, color: ChatColor.lightGray, fontWeight: FontWeight.bold),),
-          Text('Xem thêm', style: TextStyle(fontSize: 16, color: ChatColor.gray7, fontWeight: FontWeight.bold),)
+          Text(title, style: TextStyle(fontSize: 16, color: ChatColor.lightGray, fontWeight: FontWeight.bold, fontFamily: 'PlusJakartaSans'),),
+          Text('Xem thêm', style: TextStyle(fontSize: 16, color: ChatColor.gray7, fontWeight: FontWeight.bold, fontFamily: 'PlusJakartaSans'),)
         ],
       ),
     );

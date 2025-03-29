@@ -28,6 +28,7 @@ class FavouriteMessageCard extends StatelessWidget {
                 color: ChatColor.almond,
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
+                fontFamily: 'PlusJakartaSans',
               ),
             ),
             const SizedBox(height: 10),
@@ -52,6 +53,7 @@ class FavouriteMessageCard extends StatelessWidget {
                     style: const TextStyle(
                       color: Colors.white70,
                       fontSize: 16,
+                      fontFamily: 'PlusJakartaSans',
                     ),
                   ),
                 );

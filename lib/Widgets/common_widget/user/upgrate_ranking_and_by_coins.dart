@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
+import '../show_bottom/show_bottom_by_coins.dart';
+import '../show_bottom/show_bottom_upgrate_rank.dart';
+
 class UpgradeAndBuyCoinsCard extends StatelessWidget {
   final RxMap<dynamic, dynamic> userData;
 
@@ -10,7 +13,7 @@ class UpgradeAndBuyCoinsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return userData.isNotEmpty
         ? Card(
-      color: Color(0xFF1E1E1E), // Màu nền tối
+      color: const Color(0xFF1E1E1E), // Màu nền tối
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
@@ -21,13 +24,23 @@ class UpgradeAndBuyCoinsCard extends StatelessWidget {
           mainAxisAlignment: userData['ranking'] == 'Normal' ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
           children: [
             if (userData['ranking'] == 'Normal')
-              _buildButton(
-                text: 'Nâng cấp tài khoản',
-                color: Color(0xFF3B6790), // Xanh dương
+              InkWell(
+                onTap:(){
+                  showBottomUpgrateRank(context);
+                },
+                child: _buildButton(
+                  text: 'Nâng cấp tài khoản',
+                  color: const Color(0xFF3B6790), // Xanh dương
+                ),
               ),
-            _buildButton(
-              text: 'Nạp ví',
-              color: Color(0xFFEB5B00), // Cam ánh kim
+            InkWell(
+              onTap: (){
+                showBottomByCoints(context);
+              },
+              child: _buildButton(
+                text: 'Nạp ví',
+                color: const Color(0xFFEB5B00), // Cam ánh kim
+              ),
             ),
           ],
         ),
@@ -40,7 +53,7 @@ class UpgradeAndBuyCoinsCard extends StatelessWidget {
 
   Widget _buildButton({required String text, required Color color}) {
     return Container(
-      width: text == 'Nâng cấp tài khoản' ? 160 : 120,
+      width: text == 'Nâng cấp tài khoản' ? 170 : 120,
       height: 50,
       decoration: BoxDecoration(
         color: color,
@@ -49,17 +62,18 @@ class UpgradeAndBuyCoinsCard extends StatelessWidget {
           BoxShadow(
             color: Colors.black.withOpacity(0.2),
             blurRadius: 5,
-            offset: Offset(2, 4),
+            offset: const Offset(2, 4),
           ),
         ],
       ),
       child: Center(
         child: Text(
           text,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 16,
             fontWeight: FontWeight.bold,
+            fontFamily: 'PlusJakartaSans'
           ),
         ),
       ),

@@ -34,6 +34,7 @@ class LoginView extends StatelessWidget {
                         color: ChatColor.almond,
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'PlusJakartaSans',
                       ),
                     ),
                     const SizedBox(height: 32),
@@ -51,6 +52,7 @@ class LoginView extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 10,
                               color: ChatColor.almond2,
+                              fontFamily: 'PlusJakartaSans',
                             ),
                           ),
                         ],
@@ -72,7 +74,7 @@ class LoginView extends StatelessWidget {
                           child: const Text(
                             'Đăng Nhập',
                             textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.black),
+                            style: TextStyle(color: Colors.black, fontFamily: 'PlusJakartaSans'),
                           ),
                         ),
                         const SizedBox(width: 16),
@@ -85,7 +87,7 @@ class LoginView extends StatelessWidget {
                           child: const Text(
                             'Đăng Ký',
                             textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.black),
+                            style: TextStyle(color: Colors.black, fontFamily: 'PlusJakartaSans'),
                           ),
                         ),
                       ],
@@ -144,7 +146,7 @@ class LoginView extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 10.0),
             child: Text(
               'Hoặc tiếp tục với',
-              style: TextStyle(color: Color(0xFF616161)),
+              style: TextStyle(color: Color(0xFF616161), fontFamily: 'PlusJakartaSans'),
             ),
           ),
           Expanded(

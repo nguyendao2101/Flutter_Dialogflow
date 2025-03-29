@@ -37,7 +37,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: ChatColor.almond),
+              color: ChatColor.almond,
+              fontFamily: 'PlusJakartaSans'),
         ),
       ),
       body: Form(
@@ -179,37 +180,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         sex: _viewModel.sex,
                         verificationCode: codeMail.toString(),
                       ));
-                      // _viewModel.isLoading.value = true;
-                      // _viewModel.signUp(
-                      //   _viewModel.email ?? '',
-                      //   _viewModel.password ?? '',
-                      //   _viewModel.confirmPassword ?? '',
-                      //   _viewModel.hoTen ?? '',
-                      //   _viewModel.address ?? '',
-                      //   _viewModel.sex ?? '',
-                      //   () {
-                      //     _viewModel.isLoading.value = false;
-                      //     Get.snackbar(
-                      //       'Success',
-                      //       'Đăng ký thành công',
-                      //       snackPosition: SnackPosition.BOTTOM,
-                      //     );
-                      //
-                      //     // Reset form state if needed
-                      //     _viewModel.resetForm();
-                      //
-                      //     // Navigate to Login Screen
-                      //     Get.offAll(() => const LoginView());
-                      //   },
-                      //   (error) {
-                      //     _viewModel.isLoading.value = false;
-                      //     Get.snackbar(
-                      //       'Error',
-                      //       error,
-                      //       snackPosition: SnackPosition.BOTTOM,
-                      //     );
-                      //   },
-                      // );
                     }
                   },
                   style: ElevatedButton.styleFrom(

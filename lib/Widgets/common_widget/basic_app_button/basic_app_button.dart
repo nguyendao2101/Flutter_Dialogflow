@@ -40,7 +40,7 @@ class BasicAppButton extends StatelessWidget {
           style: TextStyle(
               fontSize: sizeTitle,
               fontWeight: fontW ?? FontWeight.bold,
-              fontFamily: 'Jost'),
+              fontFamily: 'PlusJakartaSans'),
         ));
   }
 }

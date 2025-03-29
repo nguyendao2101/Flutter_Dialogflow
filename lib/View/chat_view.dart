@@ -221,7 +221,7 @@ class _ChatScreenState extends State<ChatScreen> {
             Text(
               'Trò chuyện',
               style: TextStyle(
-                  fontSize: 24, height: 1.75, color: ChatColor.almond),
+                  fontSize: 24, height: 1.75, color: ChatColor.almond, fontFamily: 'PlusJakartaSans'),
             ),
             const Spacer(),
             Row(
@@ -269,7 +269,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         height: 11.05,
                       ),
                       const SizedBox(width: 5),
-                      Text(controllerUser.userData['money'].toString()),
+                      Text(controllerUser.userData['money'].toString(), style: TextStyle(fontFamily: 'PlusJakartaSans'),),
                     ],
                   ),
                 )
