@@ -163,7 +163,7 @@ class _HomeViewState extends State<HomeView> {
                               Text(
                                 'Nhấn để trò chuyện',
                                 style: TextStyle(
-                                    fontSize: 28,
+                                    fontSize: 24,
                                     height: 2.25,
                                     color: ChatColor.background,
                                     fontFamily: 'PlusJakartaSans',

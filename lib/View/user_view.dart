@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freechat_dialogflow/View/login_view.dart';
+import 'package:freechat_dialogflow/ViewModel/login_viewModel.dart';
 import 'package:freechat_dialogflow/ViewModel/user_view_model.dart';
 import 'package:freechat_dialogflow/Widgets/common/color_extentionn.dart';
 import 'package:freechat_dialogflow/Widgets/common_widget/basic_app_button/basic_app_button.dart';
@@ -23,6 +24,7 @@ class SettingsView extends StatefulWidget {
 
 class _SettingsViewState extends State<SettingsView> {
   final controller = Get.put(UserViewModel());
+  final controllerLogin = Get.put(LoginViewmodel());
 
   @override
   void initState() {
@@ -63,6 +65,7 @@ class _SettingsViewState extends State<SettingsView> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 100),
                 child: BasicAppButton(onPressed: (){
+                    controllerLogin.signOut();
                     Get.offAll(() => const LoginView());
                 }, title: 'LogOut', sizeTitle: 18, height: 44, colorButton: const Color(0xffA31D1D), radius: 12,),
               )
@@ -108,7 +111,7 @@ class _SettingsViewState extends State<SettingsView> {
                 children: [
                   _buildUserInfoRow('Tên', controller.userData['fullName']),
                   const Divider(color: Colors.white24),
-                  _buildUserInfoRow('Email', controller.userData['email']),
+                  _buildUserInfoRow('Email', "  ${controller.userData['email']}"),
                   const Divider(color: Colors.white24),
                   _buildUserInfoRow('Địa chỉ', controller.userData['address']),
                   const Divider(color: Colors.white24),
@@ -141,12 +144,17 @@ class _SettingsViewState extends State<SettingsView> {
               fontFamily: 'PlusJakartaSans',
             ),
           ),
-          Text(
-            value ?? '',
-            style: const TextStyle(
-              color: Colors.white70,
-              fontSize: 16,
-              fontFamily: 'PlusJakartaSans',
+          Flexible(
+            child: Text(
+              value ?? '',
+              style: const TextStyle(
+                color: Colors.white70,
+                fontSize: 16,
+                fontFamily: 'PlusJakartaSans',
+              ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              softWrap: false,
             ),
           ),
         ],

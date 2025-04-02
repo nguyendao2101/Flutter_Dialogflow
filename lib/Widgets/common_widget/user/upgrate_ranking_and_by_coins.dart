@@ -61,7 +61,7 @@ class _UpgradeAndBuyCoinsCardState extends State<UpgradeAndBuyCoinsCard> {
 
   Widget _buildButton({required String text, required Color color}) {
     return Container(
-      width: text == 'Nâng cấp tài khoản' ? 170 : 120,
+      width: text == 'Nâng cấp tài khoản' ? 170 : 100,
       height: 50,
       decoration: BoxDecoration(
         color: color,

@@ -61,10 +61,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: TextFormField(
                     decoration: InputDecoration(
                       labelText: 'Email',
+                      labelStyle: TextStyle(color: ChatColor.almond),
                       filled: true,
                       fillColor: ChatColor.gray1,
+
                     ),
-                    style: const TextStyle(color: Colors.white70),
+                    style: const TextStyle(color: Colors.white),
                     keyboardType: TextInputType.emailAddress,
                     onChanged: _viewModel.onChangeUsername,
                     validator: _viewModel.validatorUsername,
@@ -76,7 +78,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
                     child: TextFormField(
                       decoration: InputDecoration(
-                        labelText: 'Mật Khẩu',
+                        labelText: 'Mật khẩu',
+                        labelStyle: TextStyle(color: ChatColor.almond),
                         filled: true,
                         fillColor: ChatColor.gray1,
                         suffixIcon: IconButton(
@@ -84,6 +87,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             _viewModel.isObscured.value
                                 ? Icons.visibility_off
                                 : Icons.visibility,
+                            color: ChatColor.almond,
                           ),
                           onPressed: _viewModel.toggleObscureText,
                         ),
@@ -102,6 +106,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: TextFormField(
                       decoration: InputDecoration(
                         labelText: 'Nhập lại mật khẩu',
+                        labelStyle: TextStyle(color: ChatColor.almond),
                         filled: true,
                         fillColor: ChatColor.gray1,
                         suffixIcon: IconButton(
@@ -109,6 +114,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             _viewModel.isEntryPasswordObscured.value
                                 ? Icons.visibility_off
                                 : Icons.visibility,
+                            color: ChatColor.almond,
                           ),
                           onPressed: _viewModel.toggleEntryPasswordObscureText,
                         ),
@@ -126,6 +132,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: TextFormField(
                     decoration: InputDecoration(
                       labelText: 'Họ và tên',
+                      labelStyle: TextStyle(color: ChatColor.almond),
                       filled: true,
                       fillColor: ChatColor.gray1,
                     ),
@@ -140,6 +147,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: TextFormField(
                     decoration: InputDecoration(
                       labelText: 'Địa chỉ',
+                      labelStyle: TextStyle(color: ChatColor.almond),
                       filled: true,
                       fillColor: ChatColor.gray1,
                     ),
@@ -154,6 +162,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: TextFormField(
                     decoration: InputDecoration(
                       labelText: 'Giới tính',
+                      labelStyle: TextStyle(color: ChatColor.almond),
                       filled: true,
                       fillColor: ChatColor.gray1,
                     ),

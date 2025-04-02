@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:freechat_dialogflow/View/signUp_view.dart';
 import 'package:freechat_dialogflow/ViewModel/login_viewModel.dart';
@@ -98,9 +99,19 @@ class LoginView extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          ImageAssest.logoGG,
-                          height: 56,
+                        InkWell(
+                          onTap: () {
+                            User? user = controller.signInWithGoogle() as User?;
+                            if (user != null) {
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text('Signed in as ${user.displayName}'),
+                              ));
+                            }
+                          },
+                          child: Image.asset(
+                            ImageAssest.logoGG,
+                            height: 56,
+                          ),
                         ),
                         const SizedBox(width: 20),
                         Image.asset(
