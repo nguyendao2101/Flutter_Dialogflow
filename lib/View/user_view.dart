@@ -30,6 +30,7 @@ class _SettingsViewState extends State<SettingsView> {
     super.initState();
     controller.initializeUserId();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

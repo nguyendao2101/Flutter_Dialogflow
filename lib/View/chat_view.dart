@@ -6,6 +6,7 @@ import 'package:dialogflow_flutter/language.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:freechat_dialogflow/ViewModel/get_data_view_model.dart';
 import 'package:freechat_dialogflow/ViewModel/user_view_model.dart';
 import 'package:get/get.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
@@ -33,12 +34,41 @@ class _ChatScreenState extends State<ChatScreen> {
       FirebaseDatabase.instance.ref(); // Reference to Firebase
   late String _userId; // Late initialization for userId
   final controllerUser = Get.put(UserViewModel());
+  final controllerGetData = Get.put(GetDataViewModel());
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
     _speech = stt.SpeechToText();
     _initializeUserId(); // Fetch the user ID
+  }
+
+  Future<void> _checkCanAskQuestion() async {
+    bool canAsk = await controllerGetData.canAskQuestion();  // Gọi hàm kiểm tra
+    if (canAsk) {
+      // Nếu người dùng có thể hỏi câu hỏi, thực hiện hành động tương ứng
+      print("Người dùng có thể hỏi câu hỏi.");
+      // Thực hiện hành động tiếp theo, ví dụ, mở màn hình chat, v.v.
+    } else {
+      // Nếu người dùng không thể hỏi câu hỏi, hiển thị thông báo
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Thông báo"),
+            content: Text("Bạn đã đạt giới hạn câu hỏi trong ngày."),
+            actions: <Widget>[
+              TextButton(
+                child: Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   void _initializeUserId() async {
@@ -406,7 +436,10 @@ class _ChatScreenState extends State<ChatScreen> {
                 height: 56,
                 width: 56,
               ),
-              onPressed: _sendMessage,
+              onPressed: (){
+                _sendMessage();
+                _checkCanAskQuestion();
+              },
             ),
           ],
         ),

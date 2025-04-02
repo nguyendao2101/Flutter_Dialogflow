@@ -77,6 +77,8 @@ class SignupViewModel extends GetxController {
       String sex,
       double? money,
       String? ranking,
+      int? dailyQuestions,
+      String? lastAskedDate,
       Function onSuccess,
       Function(String) onError) {
     _firAuth
@@ -90,6 +92,8 @@ class SignupViewModel extends GetxController {
         'sex': sex,
         'money': money,
         'ranking': ranking,
+        'dailyQuestions': dailyQuestions,
+        'lastAskedDate': lastAskedDate,
       }).then((_) {
         onSuccess();
       }).catchError((error) {

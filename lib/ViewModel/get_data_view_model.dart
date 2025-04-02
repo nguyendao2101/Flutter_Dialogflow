@@ -111,4 +111,42 @@ class GetDataViewModel extends GetxController {
       });
     }
   }
+  Future<bool> canAskQuestion() async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      String userId = user.uid;
+      DatabaseReference userRef = _dbRef.child("users/$userId");
+      DataSnapshot snapshot = await userRef.get();
+
+      if (snapshot.exists) {
+        final data = snapshot.value as Map<dynamic, dynamic>?;
+        if (data != null) {
+          String today = DateFormat('yyyy-MM-dd').format(DateTime.now());
+          int questionCount = data["dailyQuestions"] ?? 0;
+          String lastDate = data["lastAskedDate"] ?? "";
+          String userRank = data["rank"] ?? "Normal";
+
+          if (userRank == "Pro") return true;
+
+          if (lastDate != today) {
+            userRef.update({
+              "dailyQuestions": 1,
+              "lastAskedDate": today
+            });
+            return true;
+          } else {
+            if (questionCount < 50) {
+              userRef.update({
+                "dailyQuestions": questionCount + 1
+              });
+              return true;
+            } else {
+              return false;
+            }
+          }
+        }
+      }
+    }
+    return false;
+  }
 }
