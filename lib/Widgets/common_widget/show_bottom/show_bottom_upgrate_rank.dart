@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:freechat_dialogflow/ViewModel/get_data_view_model.dart';
+import 'package:get/get.dart';
 
 void showBottomUpgrateRank(BuildContext context) {
   int selectedOption = 0;
   final List<Map<String, dynamic>> upgradeOptions = [
-    {'title': '1 Tuần', 'price': '50 coins'},
-    {'title': '1 Tháng', 'price': '150 coins'},
-    {'title': '1 Quý', 'price': '400 coins'},
-    {'title': '1 Năm', 'price': '1.5K coins'},
+    {'title': '1 Tuần', 'price': 50},
+    {'title': '1 Tháng', 'price': 150},
+    {'title': '1 Quý', 'price': 400},
+    {'title': '1 Năm', 'price': 1500},
   ];
+  final controllerGetData = Get.put(GetDataViewModel());
 
   showModalBottomSheet(
     context: context,
@@ -73,7 +76,7 @@ void showBottomUpgrateRank(BuildContext context) {
                                 ),
                               ),
                               Text(
-                                upgradeOptions[index]['price'],
+                                '${upgradeOptions[index]['price']} coins',
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -95,8 +98,9 @@ void showBottomUpgrateRank(BuildContext context) {
                         padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 50),
                       ),
                       onPressed: () {
+                        controllerGetData.updateRank(upgradeOptions[selectedOption]['title']);
+                        controllerGetData.updateByMoney(upgradeOptions[selectedOption]['price']);
                         Navigator.pop(context);
-                        // Xử lý logic thanh toán
                       },
                       child: const Text(
                         'Xác nhận nâng cấp',

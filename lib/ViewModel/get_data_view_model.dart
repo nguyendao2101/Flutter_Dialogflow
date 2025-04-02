@@ -1,12 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class GetDataViewModel extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final DatabaseReference _dbRef = FirebaseDatabase.instance.ref();
 
   var money = 0.obs; // Giá trị money sẽ được cập nhật ở đây
+  var rank = "Normal".obs;
+  var timePro = "".obs;
 
   @override
   void onInit() {
@@ -49,6 +52,62 @@ class GetDataViewModel extends GetxController {
         int updatedMoney = currentMoney + addedMoney;
         moneyRef.set(updatedMoney);
         money.value = updatedMoney; // Cập nhật giá trị money trong app
+      });
+    }
+  }
+  void updateByMoney(int addedMoney) async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      String userId = user.uid;
+      DatabaseReference moneyRef = _dbRef.child("users/$userId/money");
+
+      moneyRef.once().then((DatabaseEvent event) {
+        final data = event.snapshot.value;
+        int currentMoney = (data != null) ? data as int : 0;
+        int updatedMoney = currentMoney - addedMoney;
+        moneyRef.set(updatedMoney);
+        money.value = updatedMoney; // Cập nhật giá trị money trong app
+      });
+    }
+  }
+  void updateRank(String duration) async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      String userId = user.uid;
+      DatabaseReference userRef = _dbRef.child("users/$userId");
+
+      DateTime now = DateTime.now();
+      DateTime expiryDate;
+
+      switch (duration) {
+        case "1 Tuần":
+          expiryDate = now.add(Duration(days: 7));
+          break;
+        case "1 Tháng":
+          expiryDate = now.add(Duration(days: 30));
+          break;
+        case "1 Qúy":
+          expiryDate = now.add(Duration(days: 90));
+          break;
+        case "1 Năm":
+          expiryDate = now.add(Duration(days: 365));
+          break;
+        default:
+          print("Thời gian không hợp lệ");
+          return;
+      }
+
+      String formattedExpiryDate = DateFormat('yyyy-MM-dd').format(expiryDate);
+
+      userRef.update({
+        "ranking": "Pro",
+        "timePro": formattedExpiryDate
+      }).then((_) {
+        rank.value = "Pro";
+        timePro.value = formattedExpiryDate;
+        print("Cập nhật rank thành công: Pro đến $formattedExpiryDate");
+      }).catchError((error) {
+        print("Lỗi khi cập nhật rank: $error");
       });
     }
   }
