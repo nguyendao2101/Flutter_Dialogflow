@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:freechat_dialogflow/Widgets/common_widget/show_bottom/show_bottom_payment_fail.dart';
 import 'package:freechat_dialogflow/Widgets/common_widget/show_bottom/show_bottom_payment_success.dart';
 import 'package:get/get.dart';
 import 'package:vnpay_flutter/vnpay_flutter.dart';
@@ -153,6 +154,9 @@ void showBottomByCoints(BuildContext context, ) {
                           controllerGetData.updateMoney(coins);
                           Navigator.pop(context);
                           showPaymentMethod(context);
+                        } else{
+                          Navigator.pop(context);
+                          showBottomPaymentFail(context);
                         }
                       },
 

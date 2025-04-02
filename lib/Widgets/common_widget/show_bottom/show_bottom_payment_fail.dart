@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../images/image_extention.dart';
 import '../basic_app_button/basic_app_button.dart';
 
-void showPaymentMethod(BuildContext context) {
+void showBottomPaymentFail(BuildContext context) {
   showModalBottomSheet(
     context: context,
     barrierColor: Colors.grey.withOpacity(0.8),
@@ -42,11 +42,11 @@ void showPaymentMethod(BuildContext context) {
                     children: [
                       // Add a check icon for visual confirmation
                       const SizedBox(height: 24),
-                      Image.asset(ImageAssest.check, height: 128,),
+                      Image.asset(ImageAssest.remove, height: 128,),
                       const SizedBox(height: 64),
 
                       const Text(
-                        'Thanh toán của bạn đã được ChatMate xác nhận thành công',
+                        'Thanh toán của bạn đã được ChatMate xác nhận không thất bại',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w500,
