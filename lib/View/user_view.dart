@@ -10,6 +10,7 @@ import 'package:freechat_dialogflow/Widgets/common_widget/basic_app_button/basic
 import 'package:freechat_dialogflow/Widgets/images/image_extention.dart';
 import 'package:get/get.dart';
 
+import '../ViewModel/get_data_view_model.dart';
 import '../Widgets/common_widget/user/favourite_message_card.dart';
 import '../Widgets/common_widget/user/upgrate_ranking_and_by_coins.dart';
 

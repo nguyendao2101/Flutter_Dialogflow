@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
+import '../../../ViewModel/get_data_view_model.dart';
 import '../show_bottom/show_bottom_by_coins.dart';
 import '../show_bottom/show_bottom_upgrate_rank.dart';
 
-class UpgradeAndBuyCoinsCard extends StatelessWidget {
+class UpgradeAndBuyCoinsCard extends StatefulWidget {
   final RxMap<dynamic, dynamic> userData;
 
   const UpgradeAndBuyCoinsCard({Key? key, required this.userData}) : super(key: key);
 
   @override
+  State<UpgradeAndBuyCoinsCard> createState() => _UpgradeAndBuyCoinsCardState();
+}
+
+class _UpgradeAndBuyCoinsCardState extends State<UpgradeAndBuyCoinsCard> {
+  final controllerGetData = Get.put(GetDataViewModel());
+  @override
   Widget build(BuildContext context) {
-    return userData.isNotEmpty
+    return widget.userData.isNotEmpty
         ? Card(
       color: const Color(0xFF1E1E1E), // Màu nền tối
       shape: RoundedRectangleBorder(
@@ -21,9 +29,9 @@ class UpgradeAndBuyCoinsCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
-          mainAxisAlignment: userData['ranking'] == 'Normal' ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
+          mainAxisAlignment: widget.userData['ranking'] == 'Normal' ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
           children: [
-            if (userData['ranking'] == 'Normal')
+            if (widget.userData['ranking'] == 'Normal')
               InkWell(
                 onTap:(){
                   showBottomUpgrateRank(context);

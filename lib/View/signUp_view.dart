@@ -1,12 +1,9 @@
 // ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
-import 'package:freechat_dialogflow/View/login_view.dart';
 import 'package:freechat_dialogflow/ViewModel/signUp_viewModel.dart';
 import 'package:freechat_dialogflow/Widgets/common/color_extentionn.dart';
 import 'package:freechat_dialogflow/Widgets/images/image_extention.dart';
 import 'package:get/get.dart';
-
 import '../Widgets/common_widget/check_mail/check_mail.dart';
 
 class SignUpScreen extends StatefulWidget {

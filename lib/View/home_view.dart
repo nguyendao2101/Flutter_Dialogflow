@@ -10,6 +10,7 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 import '../Model/location_model.dart';
 import '../Model/weather_model.dart';
 import '../ViewModel/user_view_model.dart';
+import '../Widgets/common_widget/show_bottom/show_bottom_by_coins.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -100,7 +101,9 @@ class _HomeViewState extends State<HomeView> {
                 ],
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  showBottomByCoints(context);
+                },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: ChatColor.background,
                   backgroundColor: ChatColor.almond,

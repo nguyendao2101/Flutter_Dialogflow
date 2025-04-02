@@ -100,12 +100,12 @@ class LoginView extends StatelessWidget {
                       children: [
                         Image.asset(
                           ImageAssest.logoGG,
-                          height: 72,
+                          height: 56,
                         ),
                         const SizedBox(width: 20),
                         Image.asset(
                           ImageAssest.logoFB,
-                          height: 58,
+                          height: 48,
                         ),
                       ],
                     ),
@@ -168,7 +168,7 @@ class LoginView extends StatelessWidget {
           controller: controller.passwordController,
           obscureText: controller.isObscured.value,
           decoration: InputDecoration(
-            labelText: 'Mật Khẩu',
+            // labelText: 'Mật Khẩu',
             enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.black),
             ),
@@ -199,7 +199,7 @@ class LoginView extends StatelessWidget {
         controller: controller.emailController,
         obscureText: false,
         decoration: InputDecoration(
-          labelText: 'Email',
+          // labelText: 'Email',
           enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.black),
           ),

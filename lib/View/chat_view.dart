@@ -1,7 +1,5 @@
 // ignore_for_file: library_private_types_in_public_api, empty_catches, unused_element, avoid_print
-
 import 'dart:async';
-
 import 'package:dialogflow_flutter/dialogflowFlutter.dart';
 import 'package:dialogflow_flutter/googleAuth.dart';
 import 'package:dialogflow_flutter/language.dart';
@@ -14,7 +12,7 @@ import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:freechat_dialogflow/Widgets/common/color_extention.dart';
 import 'package:freechat_dialogflow/Widgets/common/color_extentionn.dart';
 import 'package:freechat_dialogflow/Widgets/images/image_extention.dart';
-import 'package:vnpay_flutter/vnpay_flutter.dart';
+import '../Widgets/common_widget/show_bottom/show_bottom_by_coins.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -250,7 +248,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 const SizedBox(width: 20),
                 ElevatedButton(
                   onPressed: () {
-                      onPayment(200000);
+                    showBottomByCoints(context);
                   },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: ChatColor.background,
@@ -414,48 +412,5 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
       ),
     );
-  }
-  Future<void> onPayment(double amount) async {
-    // Sử dụng Completer để chờ kết quả trả về
-    final completer = Completer<void>();
-
-    final paymentUrl = VNPAYFlutter.instance.generatePaymentUrl(
-      url: 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html',
-      version: '2.0.1',
-      tmnCode: 'YLLVXBWY',
-      txnRef: DateTime.now().millisecondsSinceEpoch.toString(),
-      orderInfo: 'Pay $amount VND',
-      amount: amount,
-      returnUrl: 'https://sandbox.vnpayment.vn/merchant_webapi/api/transaction',
-      ipAdress: '192.168.10.10',
-      vnpayHashKey: '1J9MHQHA5NK9C4J3D26CZO1HAPO02IJY',
-      vnPayHashType: VNPayHashType.HMACSHA512,
-      vnpayExpireDate: DateTime.now().add(const Duration(hours: 1)),
-    );
-
-    await VNPAYFlutter.instance.show(
-      paymentUrl: paymentUrl,
-      onPaymentSuccess: (params) {
-        print('Params on success: $params');
-        responseCode = params.containsKey('vnp_ResponseCode')
-            ? params['vnp_ResponseCode']
-            : 'No Response Code';
-        print('Response Code on success: $responseCode');
-
-        // Đánh dấu là hoàn tất thanh toán thành công
-        completer.complete();
-      },
-      onPaymentError: (params) {
-        print('Params on error: $params');
-        responseCode = 'Error';
-        print('Response Code on error: $responseCode');
-
-        // Đánh dấu là hoàn tất thanh toán thất bại
-        completer.complete();
-      },
-    );
-
-    // Chờ kết quả trả về từ VNPAY
-    await completer.future;
   }
 }

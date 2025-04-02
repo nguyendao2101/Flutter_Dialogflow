@@ -42,5 +42,9 @@ class ImageAssest {
 
   //user
   static String users = '$baseImagePath/user.png';
+  
+  //payment
+  static String check = '$baseImagePath/check.png';
+  static String remove = '$baseImagePath/remove.png';
 
 }
